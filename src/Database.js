@@ -1,16 +1,39 @@
-import { List } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload, List, UploadProps } from 'antd';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
+import { parse } from 'papaparse';
 
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
 
 const Database = () => {
 
     const [data, setData] = useState([]);
+
+
+    const props = {
+        name: 'file',
+
+        beforeUpload: (file) => {
+            let csvData;
+            const reader = new FileReader();
+            console.log('YOOOOOOO', file);
+            reader.onload = e => console.log(e.target.result);
+            
+            console.log(csvData);
+
+            
+            
+
+
+
+        }
+    };
+
+
+
     const firebaseConfig = {
         apiKey: 'AIzaSyDEZe5LjMna_JwHWWUTz7WoQ9rnSDcHYR8',
         authDomain: 'wenjobs-fba5d.firebaseapp.com',
@@ -80,6 +103,10 @@ const Database = () => {
 
                 />
             }
+
+            <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
 
         </>
     );
