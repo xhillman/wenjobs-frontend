@@ -35,13 +35,7 @@ const Database = () => {
 
 
     const firebaseConfig = {
-        apiKey: 'AIzaSyDEZe5LjMna_JwHWWUTz7WoQ9rnSDcHYR8',
-        authDomain: 'wenjobs-fba5d.firebaseapp.com',
-        projectId: 'wenjobs-fba5d',
-        storageBucket: 'wenjobs-fba5d.appspot.com',
-        messagingSenderId: '1030799827901',
-        appId: '1:1030799827901:web:68dba6c523f20abd3a68d4',
-        measurementId: 'G-J006Q916VK',
+
     };
 
     // Initialize Firebase
