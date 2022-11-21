@@ -1,6 +1,7 @@
 // import ConnectionTable from "./Components/ConnectionTable";
 import FileUploadForm from "./Components/FileUpload";
-import FilterFormField from './Components/FilterFormField'
+import FormInputTableData from './Components/FormInputTableData';
+// import FilterFormField from './Components/FilterFormField'
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
         <h1>Wen Jobs Front-end</h1>
       </header>
       <FileUploadForm/>
-      <FilterFormField/>
+      {/* <FilterFormField/> */}
+      <FormInputTableData/>
     </div>
   );
 }
