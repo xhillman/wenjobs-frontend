@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
-import { parse } from 'papaparse';
+import Papa from 'papaparse';
 
 
 
@@ -13,25 +13,23 @@ import { parse } from 'papaparse';
 const Database = () => {
 
     const [data, setData] = useState([]);
+    const [connectionsData, setConnectionsData] = useState(null);
+
+    const handleFile = (info) => {
+
+        console.log(info);
+        Papa.parse(info.file, {
+            header: true,
+            complete: (result) => {
+                console.log(result.data);
+                setConnectionsData(result.data)
+            }
+        });
+    }
 
 
     const props = {
         name: 'file',
-
-        beforeUpload: (file) => {
-            let csvData;
-            const reader = new FileReader();
-            console.log('YOOOOOOO', file);
-            reader.onload = e => console.log(e.target.result);
-            
-            console.log(csvData);
-
-            
-            
-
-
-
-        }
     };
 
 
@@ -91,10 +89,10 @@ const Database = () => {
             <h1>Database</h1>
             <button onClick={addData}>add new collection item</button>
             <button onClick={readData}>add all collection items to state</button>
-            {data &&
+            {connectionsData &&
                 <List
                     itemLayout='horizontal'
-                    dataSource={data}
+                    dataSource={connectionsData}
                     renderItem={(item) => (
                         <List.Item>
                             <List.Item.Meta
@@ -106,7 +104,7 @@ const Database = () => {
                 />
             }
 
-            <Upload {...props}>
+            <Upload {...props} customRequest={handleFile}>
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
 
@@ -117,4 +115,14 @@ const Database = () => {
 export default Database;
 
 
-// Elaine	Huynh		CHI Franciscan Health	Critical Care Registered Nurse	17 Nov 2022
+// let reader = new FileReader();
+//         let file = info.file
+//         reader.onload = (function (file) { // here we save variable 'file' in closure
+//             return function (e) { // return handler function for 'onload' event
+//                 e.preventDefault();
+//                 console.log(e.target.result);
+//                 csvData = e.target.result;
+//                 // csvData.push(e.target.result); // do some thing with data
+//             }
+//         })(file);
+//         reader.readAsText(info.file);
