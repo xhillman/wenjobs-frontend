@@ -147,7 +147,7 @@ const CompanyTable = () => {
         <Column title='Position' dataIndex='Position' key={Math.random()} />
         <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
       </Table>
-
+      
       <Table dataSource={jobsData}>
         <Column title='job' dataIndex='job' key={Math.random()} />
         <Column title='company' dataIndex='company' key={Math.random()} />
