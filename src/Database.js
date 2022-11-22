@@ -2,7 +2,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload, List, UploadProps } from 'antd';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
@@ -51,26 +51,34 @@ const Database = () => {
     const db = getFirestore(app);
 
 
-    const addData = async () => {
-
+    const addConnectionsData = async () => {
+        const batch = writeBatch(db);
 
         try {
-            const docRef = await addDoc(collection(db, 'connections'), {
-                Company: 'CHI Franciscan Health',
-                Connected_On: '17 Nov 2022',
-                Email: '',
-                First: 'Elaine',
-                Last: 'Huynh',
-                Position: 'Critical Care Registered Nurse',
-            });
-            console.log('Document written with ID: ', docRef.id);
-            setData([{ docRef }]);
+            if (connectionsData) {
+                connectionsData.forEach(element => {
+                    let ref = doc(db, "connections", element['First Name']);
+                    batch.set(ref,
+                        {
+                            'First Name': element['First Name'],
+                            "Last Name": element['Last Name'],
+                            "Email Address": element['Email Address'],
+                            "Company": element.Company,
+                            "Position": element.Position,
+                            "Connected On": element['Connected On'],
+                        });
+                });
+            }
+
+            await batch.commit();
+
+        
         } catch (e) {
             console.error('Error adding document: ', e);
         }
     }
 
-    const readData = async () => {
+    const readConnectionsData = async () => {
 
         let connectionsArray = [];
 
@@ -87,22 +95,8 @@ const Database = () => {
     return (
         <>
             <h1>Database</h1>
-            <button onClick={addData}>add new collection item</button>
-            <button onClick={readData}>add all collection items to state</button>
-            {connectionsData &&
-                <List
-                    itemLayout='horizontal'
-                    dataSource={connectionsData}
-                    renderItem={(item) => (
-                        <List.Item>
-                            <List.Item.Meta
-                                title={item.First}
-                                description={item.Position} />
-                        </List.Item>
-                    )}
-
-                />
-            }
+            <button onClick={addConnectionsData}>add new collection item</button>
+            <button onClick={readConnectionsData}>add all connections items to state</button>
 
             <Upload {...props} customRequest={handleFile}>
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
