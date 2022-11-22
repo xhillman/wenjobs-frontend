@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Home from './Components/Home';
-import Companies from './Components/Companies/table';
+import Companies from './Components/Companies/layout';
 import Roles from './Components/Roles/form';
 import People from './Components/People/form';
 import ErrorPage from './Components/error-page';

@@ -130,25 +130,7 @@ const CompanyTable = () => {
 
   return (
     <>
-      <Upload customRequest={handleFile}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-      </Upload>
-
-      <Button onClick={addConnectionsData}>add new collection item</Button>
-      <Button onClick={readConnectionsData}>add all connections items to state</Button>
-      <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
-      <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
-
-      <Table dataSource={connectionsData}>
-        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-        <Column title='Company' dataIndex='Company' key={Math.random()} />
-        <Column title='Position' dataIndex='Position' key={Math.random()} />
-        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-      </Table>
-      
-      <Table dataSource={jobsData}>
+      <Table className='companyTableWrapper' dataSource={jobsData}>
         <Column title='job' dataIndex='job' key={Math.random()} />
         <Column title='company' dataIndex='company' key={Math.random()} />
         <Column title='location' dataIndex='location' key={Math.random()} />
@@ -156,6 +138,23 @@ const CompanyTable = () => {
         <Column title='link' dataIndex='link' key={Math.random()} />
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
+      <Table className='connectionsTableWrapper' dataSource={connectionsData}>
+        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
+        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
+        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
+        <Column title='Company' dataIndex='Company' key={Math.random()} />
+        <Column title='Position' dataIndex='Position' key={Math.random()} />
+        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
+      </Table>
+      <div className='uploadSectionWrapper'>
+        <Upload customRequest={handleFile}>
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
+        <Button onClick={addConnectionsData}>add new collection item</Button>
+        <Button onClick={readConnectionsData}>add all connections items to state</Button>
+        <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
+        <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
+      </div>
     </>
   );
 }
