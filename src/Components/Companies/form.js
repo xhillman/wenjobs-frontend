@@ -4,6 +4,7 @@ import {
   Input,
   Slider, 
 } from 'antd';
+import Description from '../Descriptions/Description';
 
 // import './style.css';
 
@@ -11,6 +12,7 @@ function FormCompanies(){
 
   return (
     <>
+    <Description />
       <Form
         labelCol={{
           span: 4,

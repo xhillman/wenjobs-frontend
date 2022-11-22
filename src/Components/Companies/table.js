@@ -1,5 +1,18 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
+// import axios from 'axios';
+
+// const job_listings = async () => {
+//   try {
+//     let data = await axios.get(`${process.env.REACT_APP_SERVER}/getJobs`);
+//     console.log(data);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
+// job_listings();
+
 const columns = [
   {
     title: 'Name',
