@@ -15,7 +15,7 @@ import {
   Upload,
 } from 'antd';
 
-import './style.css'
+// import './style.css'
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
