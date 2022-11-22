@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Home from './Components/Home';
 import Companies from './Components/Companies/layout';
-import Roles from './Components/Roles/form';
+import Roles from './Components/Roles/layout';
 import People from './Components/People/layout';
 import ErrorPage from './Components/error-page';
 import {

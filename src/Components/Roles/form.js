@@ -1,123 +1,93 @@
-import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import React from 'react';
 import {
   Form,
   Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
+  Slider,
   Checkbox,
-  Upload,
+  Select
 } from 'antd';
 
-// import './style.css'
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+import './style.css'
 
-const FormDisabledDemo = () => {
+const options = [{
+  label:'Full-Time',
+  value:'Full-Time',
+},
+{
+  label:'Part-Time',
+  value:'Part-Time',
+},
+{
+  label:'Contract',
+  value:'Contract',
+}]
 
+const marks = { 
+0: { style: { color: '#fff'}, label: '1'}, 
+100: { style: { color: '#fff'}, label: '5000'}}
+
+function RoleForm() {
   return (
-    <>
+    <div className='formWrapper'>
       <Form
         labelCol={{
-          span: 4,
+          span: 15,
         }}
         wrapperCol={{
-          span: 14,
+          span: 15,
         }}
-        layout="horizontal"
+        layout="vertical"
       >
-        <Form.Item label="Radio">
-          <Radio.Group>
-            <Radio value="apple"> Apple </Radio>
-            <Radio value="pear"> Pear </Radio>
-          </Radio.Group>
-        </Form.Item>
         <Form.Item label="General Keywords">
           <Input />
         </Form.Item>
-        <Form.Item label="Headquarters Location">
+        <Form.Item label="Role Category">
           <Input />
+        </Form.Item>
+        <Form.Item label="Remote">
+          <Checkbox />
+        </Form.Item>
+        <Form.Item label="Role Type">
+          <Select mode="multiple"
+            allowClear
+            style={{
+              width: '100%',
+            }}
+            placeholder="Please select"
+            options={options} />
+        </Form.Item>
+        <Form.Item label="Salary">
+          <Slider className='formSlider'
+            range
+            defaultValue={1}
+            marks={marks}
+            tooltip={{
+              placement: 'right'
+            }}
+          />
         </Form.Item>
         <Form.Item label="Industry">
           <Input />
         </Form.Item>
-        <Form.Item label="Select">
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label="TreeSelect">
-          <TreeSelect
-            treeData={[
-              {
-                title: 'Light',
-                value: 'light',
-                children: [
-                  {
-                    title: 'Bamboo',
-                    value: 'bamboo',
-                  },
-                ],
-              },
-            ]}
+        <Form.Item label="Number of Employees">
+          <Slider className='formSlider'
+            defaultValue={5}
+            tooltip={{
+              placement: 'right'
+            }}
           />
         </Form.Item>
-        <Form.Item label="Cascader">
-          <Cascader
-            options={[
-              {
-                value: 'zhejiang',
-                label: 'Zhejiang',
-                children: [
-                  {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                  },
-                ],
-              },
-            ]}
+        <Form.Item label="Market Cap">
+          <Slider className='formSlider'
+            defaultValue={5}
+            blur
+            tooltip={{
+              placement: 'right',
+            }}
           />
-        </Form.Item>
-        <Form.Item label="DatePicker">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="RangePicker">
-          <RangePicker />
-        </Form.Item>
-        <Form.Item label="InputNumber">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item label="TextArea">
-          <TextArea rows={4} />
-        </Form.Item>
-        <Form.Item label="Switch" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-        <Form.Item label="Upload" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                Upload
-              </div>
-            </div>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Button">
-          <Button>Button</Button>
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
-export default () => <FormDisabledDemo />;
+export default RoleForm;
