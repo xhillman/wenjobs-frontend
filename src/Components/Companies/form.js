@@ -2,25 +2,26 @@ import React from 'react';
 import {
   Form,
   Input,
-  Slider, 
+  Slider,
+  Checkbox,
 } from 'antd';
 import Description from '../Descriptions/Description';
 
-// import './style.css';
+import './style.css'
 
-function FormCompanies(){
+function CompanyForm() {
 
   return (
-    <>
-    <Description />
+
+    <div className='formWrapper'>
       <Form
         labelCol={{
-          span: 4,
+          span: 15,
         }}
         wrapperCol={{
-          span: 3,
+          span: 15,
         }}
-        layout="horizontal"
+        layout="vertical"
       >
         <Form.Item label="General Keywords">
           <Input />
@@ -31,23 +32,28 @@ function FormCompanies(){
         <Form.Item label="Industry">
           <Input />
         </Form.Item>
+        <Form.Item label="Number of Employees">
+        <Slider className='formSlider'
+          defaultValue={5}
+          tooltip={{
+            placement: 'right'
+          }}
+        />
+        </Form.Item>
+        <Form.Item label="Actively Hiring">
+        <Checkbox/>
+        </Form.Item>
+        <Form.Item label="Market Cap">
+        <Slider className='formSlider'
+          defaultValue={5}
+          blur
+          tooltip={{
+            placement: 'right',
+          }}
+        />
+        </Form.Item>
       </Form>
-      <Slider 
-        defaultValue={5}
-        tooltip={{
-          open: false,
-        
-        }}
-      />
-
-      <Slider 
-        defaultValue={5}
-        tooltip={{
-          open: false,
-        
-        }}
-      />
-    </>
+    </div>
   );
 };
-export default FormCompanies;
+export default CompanyForm;

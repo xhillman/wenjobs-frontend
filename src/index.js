@@ -1,6 +1,8 @@
+import { Auth0Provider } from '@auth0/auth0-react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+<<<<<<< HEAD
 import Companies from './Components/Companies/table';
 import Roles from './Components/Roles/form';
 import People from './Components/People/form';
@@ -13,11 +15,10 @@ import { Auth0Provider } from '@auth0/auth0-react';
 // import store from './Store';
 // import { Provider } from 'react-redux';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Home />,
     errorElement: <ErrorPage />
   },
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: '/People',
+    path: '/Connections',
     element: <People />,
     errorElement: <ErrorPage />
   }
@@ -45,9 +46,8 @@ root.render(
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
       redirectUri={window.location.origin}
     >
-      {/* <Provider store={store}> */}
-        <RouterProvider router={router} />
-      {/* </Provider> */}
+      <RouterProvider router={router} />
+      {/* <App /> */}
     </Auth0Provider>
   </React.StrictMode>
 );
