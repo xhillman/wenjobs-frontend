@@ -22,7 +22,7 @@ const CompanyTable = () => {
   };
 
   const [jobsData, setJobsData] = useState(null);
-  const [connectionsData, setConnectionsData] = useState(null);
+  // const [connectionsData, setConnectionsData] = useState(null);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -30,58 +30,58 @@ const CompanyTable = () => {
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  const handleFile = (info) => {
+  // const handleFile = (info) => {
 
-    console.log(info);
-    Papa.parse(info.file, {
-      header: true,
-      complete: (result) => {
-        console.log(result.data);
-        setConnectionsData(result.data)
-      }
-    });
-  }
+  //   console.log(info);
+  //   Papa.parse(info.file, {
+  //     header: true,
+  //     complete: (result) => {
+  //       console.log(result.data);
+  //       setConnectionsData(result.data)
+  //     }
+  //   });
+  // }
 
-  const addConnectionsData = async () => {
-    const batch = writeBatch(db);
+  // const addConnectionsData = async () => {
+  //   const batch = writeBatch(db);
 
-    try {
-      if (connectionsData) {
-        connectionsData.forEach(element => {
-          let ref = doc(db, "connections", element['First Name']);
-          batch.set(ref,
-            {
-              'First Name': element['First Name'],
-              "Last Name": element['Last Name'],
-              "Email Address": element['Email Address'],
-              "Company": element.Company,
-              "Position": element.Position,
-              "Connected On": element['Connected On'],
-            });
-        });
-      }
+  //   try {
+  //     if (connectionsData) {
+  //       connectionsData.forEach(element => {
+  //         let ref = doc(db, "connections", element['First Name']);
+  //         batch.set(ref,
+  //           {
+  //             'First Name': element['First Name'],
+  //             "Last Name": element['Last Name'],
+  //             "Email Address": element['Email Address'],
+  //             "Company": element.Company,
+  //             "Position": element.Position,
+  //             "Connected On": element['Connected On'],
+  //           });
+  //       });
+  //     }
 
-      await batch.commit();
-
-
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
-  }
-
-  const readConnectionsData = async () => {
-
-    let connectionsArray = [];
+  //     await batch.commit();
 
 
-    const querySnapshot = await getDocs(collection(db, "connections"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-      const newItem = doc.data();
-      connectionsArray.push(newItem);
-    });
-    setConnectionsData(connectionsArray);
-  }
+  //   } catch (e) {
+  //     console.error('Error adding document: ', e);
+  //   }
+  // }
+
+  // const readConnectionsData = async () => {
+
+  //   let connectionsArray = [];
+
+
+  //   const querySnapshot = await getDocs(collection(db, "connections"));
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(`${doc.id} => ${JSON.stringify(doc)}`);
+  //     const newItem = doc.data();
+  //     connectionsArray.push(newItem);
+  //   });
+  //   setConnectionsData(connectionsArray);
+  // }
 
 
   const addJobsData = async () => {
@@ -138,20 +138,20 @@ const CompanyTable = () => {
         <Column title='link' dataIndex='link' key={Math.random()} />
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
-      <Table className='connectionsTableWrapper' dataSource={connectionsData}>
+      {/* <Table className='connectionsTableWrapper' dataSource={connectionsData}>
         <Column title='First Name' dataIndex='First Name' key={Math.random()} />
         <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
         <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
         <Column title='Company' dataIndex='Company' key={Math.random()} />
         <Column title='Position' dataIndex='Position' key={Math.random()} />
         <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-      </Table>
+      </Table> */}
       <div className='uploadSectionWrapper'>
-        <Upload customRequest={handleFile}>
+        {/* <Upload customRequest={handleFile}>
           <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
-        <Button onClick={addConnectionsData}>add new collection item</Button>
-        <Button onClick={readConnectionsData}>add all connections items to state</Button>
+        </Upload> */}
+        {/* <Button onClick={addConnectionsData}>add new collection item</Button>
+        <Button onClick={readConnectionsData}>add all connections items to state</Button> */}
         <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
         <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
       </div>
