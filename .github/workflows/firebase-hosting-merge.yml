@@ -5,16 +5,16 @@ name: Deploy to Firebase Hosting on merge
 'on':
   push:
     branches:
-      - dev
+      - main
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WENJOBS_FBA5D }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WENJOBS_3DBC9 }}'
           channelId: live
-          projectId: wenjobs-fba5d
+          projectId: wenjobs-3dbc9
