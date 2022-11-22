@@ -1,6 +1,7 @@
 import { Typography, Image } from 'antd';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from 'antd';
+import { BrowserRouter, Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -48,15 +49,18 @@ function LandingPage() {
           <Title level={1} style={titleStyle}>Your Job Search. Optimized.</Title>
           <Text style={textStyle}>WenJobs gives you the tools to find in-network Web3 opportunities and identify the connections that can help you land your next role.</Text>
         </div>
-        { 
-        isAuthenticated ?
-        <div style={optionStyle}>
-          <Text>Search By:</Text>
-          <Button type='text' style={optionItemStyle}>Connections</Button>
-          <Button type='text' style={optionItemStyle}>Roles</Button>
-          <Button type='text' style={optionItemStyle}>Companies</Button>
-        </div> :
-        null
+        {
+          isAuthenticated ?
+            <div style={optionStyle}>
+              <Text>Search By:</Text>
+
+              <Link style={optionItemStyle} to='/Companies'>Companies</Link>
+              <Link style={optionItemStyle} to='/Roles'>Roles</Link>
+              <Link style={optionItemStyle} to='/Connections'>Connections</Link>
+
+
+            </div> :
+            null
         }
       </div>
       <Image
