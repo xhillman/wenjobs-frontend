@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Home from './Components/Home';
 import Companies from './Components/Companies/table';
-import Roles from './Components/Roles/form';
-import People from './Components/People/form';
+import Roles from './Components/Roles/table';
+import People from './Components/People/table';
 import ErrorPage from './Components/error-page';
 import {
   createBrowserRouter,
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: '/People',
+    path: '/Connections',
     element: <People />,
     errorElement: <ErrorPage />
   }
