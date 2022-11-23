@@ -1,6 +1,6 @@
 import { Space, Table, Tag } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload, List, UploadProps } from 'antd';
+import { Button, message, Upload, List, UploadProps, Form, Input } from 'antd';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
@@ -21,6 +21,7 @@ const PeopleTable = () => {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
   const [connectionsData, setConnectionsData] = useState(null);
+  const [searchText, setSearchText] = useState(null);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -36,6 +37,7 @@ const PeopleTable = () => {
       complete: (result) => {
         console.log(result.data);
         setConnectionsData(result.data)
+        console.log('papaarse connections ',connectionsData)
       }
     });
   }
@@ -70,8 +72,8 @@ const PeopleTable = () => {
   const readConnectionsData = async () => {
 
     let connectionsArray = [];
-
-
+    
+    
     const querySnapshot = await getDocs(collection(db, "connections"));
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${JSON.stringify(doc)}`);
@@ -79,12 +81,30 @@ const PeopleTable = () => {
       connectionsArray.push(newItem);
     });
     setConnectionsData(connectionsArray);
+    console.log(connectionsArray[0])
   }
 
-
-  console.log('HELOOOOOOOOOOO', connectionsData);
   return (
     <>
+      <div className='formWrapper'>
+        <Form
+          labelCol={{span: 15}}
+          wrapperCol={{span: 15}}
+          layout="vertical"
+        >
+          <Form.Item label="Search by First Name">
+            <Input.Search onSearch={(value) => {
+              setSearchText(value);
+            }} />
+          </Form.Item>
+          <Form.Item label="Search by Last Name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Search by Company">
+            <Input />
+          </Form.Item>
+        </Form>
+      </div>
       <Table className='connectionsTableWrapper' dataSource={connectionsData}>
         <Column title='First Name' dataIndex='First Name' key={Math.random()} />
         <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />

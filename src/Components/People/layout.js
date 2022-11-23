@@ -19,7 +19,7 @@ function PeoplePageLayout() {
             }}
           >
             <div className='contentWrapper'>
-            <PeopleForm />
+            {/* <PeopleForm /> */}
             <PeopleTable />
             </div>
           </Content>
