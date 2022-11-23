@@ -20,7 +20,7 @@ const CompanyTable = () => {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
-
+  //Just a comment to update dev
   const [jobsData, setJobsData] = useState(null);
   // const [connectionsData, setConnectionsData] = useState(null);
 

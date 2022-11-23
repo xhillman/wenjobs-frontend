@@ -106,7 +106,9 @@ const PeopleTable = () => {
           </Form.Item>
         </Form>
       </div>
-      <Table className='connectionsTableWrapper' dataSource={connectionsData}>
+      <Table pagination={{ pageSizeOptions: ['5', '10'] }}
+      defaultPageSize={5}
+      className='connectionsTableWrapper' dataSource={connectionsData}>
         <Column title='First Name' dataIndex='First Name' key={Math.random()} />
         <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
         <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
