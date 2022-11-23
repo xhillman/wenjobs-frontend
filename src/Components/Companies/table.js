@@ -1,108 +1,94 @@
-// import { Table, Space, Tag } from 'antd';
-// import React, { useState, useEffect } from 'react';
-// import Column from 'antd/es/table/Column';
-// import axios from 'axios';
+import { Space, Table, Tag } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload, List, UploadProps } from 'antd';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import Papa from 'papaparse';
+import Column from 'antd/es/table/Column';
+import jobData from './data.json'
 
-// const CompanyTable = () => {
+const CompanyTable = () => {
 
-//   // const firebaseConfig = {
-//   //   apiKey: process.env.REACT_APP_API_KEY,
-//   //   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-//   //   projectId: process.env.REACT_APP_PROJECT_ID,
-//   //   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-//   //   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-//   //   appId: process.env.REACT_APP_APP_ID,
-//   //   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-//   // };
-//   //Just a comment to update dev
-//   const [jobsData, setJobsData] = useState(null);
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  };
+  //Just a comment to update dev
+  const [jobsData, setJobsData] = useState(null);
+  // const [connectionsData, setConnectionsData] = useState(null);
 
-//   const job_listings = async () => {
-//     try {
-//       let data = await axios.get(`${process.env.REACT_APP_SERVER}/updateJobs`);
-//       let sanitizedData = data.data;
-//       setJobsData(sanitizedData);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   }
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
-//   useEffect(() => {
-//     job_listings();
-//   }, []);
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
 
-//   const columns = [
-//     {
-//       title: 'Job',
-//       dataIndex: 'job',
-//       key: 'job',
-//       render: (text) => <a>{text}</a>,
-//     },
-//     {
-//       title: 'Company',
-//       dataIndex: 'company',
-//       key: 'company',
-//     },
-//     {
-//       title: 'Key',
-//       dataIndex: 'key',
-//       key: 'key',
-//     },
-//     {
-//       title: 'Tags',
-//       key: 'tags',
-//       dataIndex: 'tags',
-//       render: (_, { tags }) => (
-//         // 3d ai analyst backend blockchain community manager 
-//         // crypto cto customer support dao data science defi 
-//         // design developer relations devops discord economy 
-//         // designer entry level front end full stack game dev 
-//         // golang intern java javascript marketing mobile 
-//         // moderator nft node non tech open source pay in 
-//         // crypto product manager project manager react refi 
-//         // research ruby rust sales smart contract solana solidity 
-//         // unity web3js
+  const addJobsData = async () => {
+    console.log(jobData)
+    const batch = writeBatch(db);
 
-//         // entry level front end full stack open source
-//         <>
-//           {tags.map((tag) => {
-//             let color = tag.length > 5 ? 'geekblue' : 'green';
-//             if (tag === 'loser') {
-//               color = 'volcano';
-//             }
-//             return (
-//               <Tag color={color} key={tag}>
-//                 {tag.toUpperCase()}
-//               </Tag>
-//             );
-//           })}
-//         </>
-//       ),
-//     },
-//     {
-//       title: 'Action',
-//       key: 'action',
-//       render: (_, record) => (
-//         <Space size="middle">
-//           <a>Invite {record.name}</a>
-//           <a>Delete</a>
-//         </Space>
-//       ),
-//     },
-//   ];
+    try {
+      if (jobData) {
+        jobData.jobs.forEach(job => {
+          let ref = doc(db, "jobs", job.key);
+          batch.set(ref,
+            {
+              "job": job.job,
+              "company": job.company,
+              "location": job.location,
+              "post_date": job.post_date,
+              "link": job.link,
+              "key": job.key,
+              "details": job.details,
+              "tags": job.tags
+            });
+        });
+      }
 
-//   return (
-//     <>
-//       <Table className='companyTableWrapper' dataSource={jobsData}>
-//         <Column title='job' dataIndex='job' key={Math.random()} />
-//         <Column title='company' dataIndex='company' key={Math.random()} />
-//         <Column title='location' dataIndex='location' key={Math.random()} />
-//         <Column title='Post time' dataIndex='post_date' key={Math.random()} />
-//         <Column title='link' dataIndex='link' key={Math.random()} />
-//         <Column title='tags' dataIndex='tags' key={Math.random()} />
-//       </Table>
-//     </>
-//   );
-// }
+      await batch.commit();
 
-// export default CompanyTable;
+
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+
+  }
+
+  const readJobsData = async () => {
+    let jobsArray = []
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${JSON.stringify(doc)}`);
+      const newItem = doc.data();
+      jobsArray.push(newItem);
+    });
+    setJobsData(jobsArray);
+  }
+
+  return (
+    <>
+      <Table className='companyTableWrapper' dataSource={jobsData}>
+        <Column title='job' dataIndex='job' key={Math.random()} />
+        <Column title='company' dataIndex='company' key={Math.random()} />
+        <Column title='location' dataIndex='location' key={Math.random()} />
+        <Column title='post_date' dataIndex='post_date' key={Math.random()} />
+        <Column title='link' dataIndex='link' key={Math.random()} />
+        <Column title='tags' dataIndex='tags' key={Math.random()} />
+      </Table>
+      <div className='uploadSectionWrapper'>
+        <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
+        <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
+      </div>
+    </>
+  );
+}
+
+export default CompanyTable;
