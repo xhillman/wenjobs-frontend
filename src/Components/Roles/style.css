@@ -5,12 +5,17 @@
   vertical-align: middle;
 }
 
+.roleDetailCard {
+  position: inherit;
+  top: 50px
+}
+
 .site-layout-background{
   background-color: rgb(0, 0, 0);
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.5);
 }
 .contentWrapper {
-  background-color: black;
+  background-color: rgb(0, 40, 78);
   border-radius: 30px;
   display: flex;
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
@@ -35,6 +40,16 @@
   padding: 1rem 1rem 1rem 1rem;
   border-radius: 30px;
   margin-left: 1rem;
+  color: red!important;
+}
+
+.roleTable {
+  background-color: rgba(255, 0, 128, 0.664);
+  width: 1000px;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 30px;
+  margin-left: 1rem;
+  color: red!important;
 }
 
 .ant-pagination-item {
@@ -45,6 +60,15 @@
   color: white !important;;
 }
 
+.ant-table-cell{
+  max-width: 300px;
+  max-height: 50px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap', */
+}
 
 .formSlider .ant-slider-rail {
   background-color: rgba(162, 160, 161, 0.25);
