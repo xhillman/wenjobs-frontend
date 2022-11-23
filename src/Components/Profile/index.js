@@ -40,6 +40,7 @@ const Profile = () => {
   const createUser = async () => {
     //firestore logic
     let newUser = user.email; //from auth0 user obj
+    console.log('createUser triggered', newUser)
 
 
     try {
@@ -56,12 +57,12 @@ const Profile = () => {
 
   }
   useEffect(() => {
-    if (user) {
 
-      createUser();
-      console.log('creating user in db...');
-    }
-  }, [])
+
+    createUser();
+    console.log('creating user in db...');
+
+  }, [user])
 
   if (isLoading) {
     return <div>Loading ...</div>;
