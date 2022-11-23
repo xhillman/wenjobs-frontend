@@ -9,6 +9,8 @@
 //   }
 // )
 
+// implement a queue? 
+
 // const initalState = {
 //   job_listings: [],
 // };

@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WENJOBS_FBA5D }}'
-          projectId: wenjobs-fba5d
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WENJOBS_3DBC9 }}'
+          projectId: wenjobs-3dbc9
