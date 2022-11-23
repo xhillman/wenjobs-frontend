@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useEffect } from "react";
 
 const profileStyle = {
@@ -40,28 +40,24 @@ const Profile = () => {
   const createUser = async () => {
     //firestore logic
     let newUser = user.email; //from auth0 user obj
-    console.log('createUser triggered', newUser)
-
 
     try {
       if (newUser) {
-        const docRef = await setDoc(doc(db, 'users', newUser),
-          {
-            connections: [],
-          })
-        console.log("Document written with ID: ", docRef.id);
+        const docRef = doc(db, "users", newUser);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+          await setDoc(doc(db, 'users', newUser),
+            {
+              connections: [],
+            })
+        }
       }
     } catch (error) {
       console.error(error)
     }
-
   }
   useEffect(() => {
-
-
     createUser();
-    console.log('creating user in db...');
-
   }, [user])
 
   if (isLoading) {
