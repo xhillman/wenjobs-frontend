@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Card } from 'antd';
 import axios from "axios";
 
-const data = async () => {
-  try {
-    let data = await axios.get('https://wen-jobs-server-deploy-prod.onrender.com/updateJobs');
-    let sanitizedData = data.data;
-    console.log(sanitizedData);
-  } catch (err) {
-    console.error(err);
-  }
-}
 
 export default function Description(){
+
   return (
     <>
-      <div>Descriptions box</div>
-    </>
+    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
+      <p>{}</p>
+      <p>Card content</p>
+      <p>Card content</p>
+    </Card>
+  </>
   )
 }

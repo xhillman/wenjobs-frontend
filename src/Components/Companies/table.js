@@ -1,4 +1,23 @@
 import { Space, Table, Tag } from 'antd';
+// import axios from 'axios';
+
+// const [jobListings, setJobListings] = useState([]);
+
+// const data = async () => {
+//   try {
+//     let data = await axios.get('https://wen-jobs-server-deploy-prod.onrender.com/updateJobs');
+//     let sanitizedData = data.data;
+//     setJobListings(sanitizedData);
+//     console.log(sanitizedData);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// }
+
+// useEffect(() => {
+//   data();
+// }, []);
+
 const columns = [
   {
     title: 'Name',
@@ -70,5 +89,5 @@ const data = [
     tags: ['cool', 'teacher'],
   },
 ];
-const TableCompanies = () => <Table columns={columns} dataSource={data} />;
+const TableCompanies = () =>  <Table columns={columns} dataSource={data} />;
 export default TableCompanies;

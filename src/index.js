@@ -2,16 +2,15 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-<<<<<<< HEAD
-import Companies from './Components/Companies/table';
-import Roles from './Components/Roles/form';
-import People from './Components/People/form';
+import Companies from './Components/Companies/layout';
+import Roles from './Components/Roles/layout';
+import People from './Components/People/layout';
 import ErrorPage from './Components/error-page';
 import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom';
-import { Auth0Provider } from '@auth0/auth0-react';
+import Home from './Components/Home';
 // import store from './Store';
 // import { Provider } from 'react-redux';
 
