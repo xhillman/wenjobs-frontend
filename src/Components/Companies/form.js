@@ -5,6 +5,7 @@ import {
   Slider,
   Checkbox,
 } from 'antd';
+import Description from '../Descriptions/Description';
 
 import './style.css'
 
