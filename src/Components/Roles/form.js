@@ -29,18 +29,17 @@ const marks = {
 
 function RoleForm(props) {
 
-  const { getKeyword, applyFilter, clearFilter } = props;
+  const { getKeyword, applyFilter, clearFilter, getRemote } = props;
 
   return (
-    <div className='formWrapper'>
-      <Button onClick={applyFilter}>Apply</Button>
-      <Button onClick={clearFilter}>Clear</Button>
+    <div className='roleFormWrapper'>
+
       <Form
         labelCol={{
           span: 15,
         }}
         wrapperCol={{
-          span: 15,
+          span: 20,
         }}
         layout="vertical"
       >
@@ -51,7 +50,7 @@ function RoleForm(props) {
           <Input />
         </Form.Item>
         <Form.Item label="Remote">
-          <Checkbox />
+          <Checkbox onChange={(e) => getRemote(e)}/>
         </Form.Item>
         <Form.Item label="Role Type">
           <Select mode="multiple"
@@ -92,6 +91,8 @@ function RoleForm(props) {
             }}
           />
         </Form.Item>
+        <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
+      <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
       </Form>
     </div>
   );

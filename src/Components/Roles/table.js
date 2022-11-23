@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
 
-// import axios from 'axios';
+import axios from 'axios';
 import './style.css'
 // import { render } from '@testing-library/react';
 
@@ -52,7 +52,7 @@ import './style.css'
       title: 'Apply Now!',
       dataIndex: 'link',
       key: 'link',
-      render: (link) => <Button type="primary" href={link}>Apply !</Button>
+      render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
     },
   ];
 
@@ -70,7 +70,7 @@ function RoleTable(props) {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
   //Just a comment to update dev
-  const [jobsData, setJobsData] = useState([]);
+  // const [jobsData, setJobsData] = useState([]);
   const [jobsRef, setJobsRef] = useState([]);
   // const [connectionsData, setConnectionsData] = useState(null);
   
@@ -118,22 +118,45 @@ function RoleTable(props) {
       const newItem = doc.data();
       jobsArray.push(newItem);
     });
-    console.log('JOBS------', jobsArray);
     setJobsData(jobsArray);
     setJobsRef(jobsArray);
   }
 
-  const filterJobs = () => {
-    let allJobs = jobsData;
-    console.log('Jobs Ref:', jobsRef);
-    let filteredJobs;
-    if (filterParams.keyword !== '') {
-      filteredJobs = allJobs.filter(job => {
-        console.log('Job:', job.job, typeof job.job);
-        return job.job.toLowerCase().includes(filterParams.keyword.toLowerCase()) || job.details.toLowerCase().includes(filterParams.keyword.toLowerCase());
-      });
+  const [jobsData, setJobsData] = useState([]);
+  const job_listings = async () => {
+    try {
+      let data = await axios.get(`${process.env.REACT_APP_SERVER}/updateJobs`);
+      let sanitizedData = data.data;
+      sanitizedData.shift()
+      setJobsData(sanitizedData);
+      setJobsRef(sanitizedData);
+    } catch (err) {
+      console.error(err);
     }
-    setJobsData(filteredJobs);
+  }
+  useEffect(() => {
+    job_listings();
+  }, []);
+
+  const filterJobs = () => {
+    let allJobs = [...jobsData];
+    let filteredJobs;
+    if (filterParams.hasOwnProperty('keyword') || filterParams.hasOwnProperty('location')) {
+      if (filterParams.keyword !== '') {
+        filteredJobs = allJobs.filter(job => {
+          // console.log('Job:', job.job, typeof job.job);
+          return job.job.toLowerCase().includes(filterParams.keyword.toLowerCase()) || job.details.toLowerCase().includes(filterParams.keyword.toLowerCase());
+        });
+      }
+      if (filterParams.remote === true) {
+        filteredJobs = filteredJobs.filter(job => {
+          return job.location.toLowerCase().includes('remote');
+        });
+      }
+      setJobsData(filteredJobs);
+    } else {
+      setJobsData(jobsRef);
+    }
   }
 
   useEffect(() => {
@@ -175,10 +198,10 @@ function RoleTable(props) {
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
       <div className='uploadSectionWrapper'>
-        <Button className='contentModifyButton' onClick={addJobsData}>Add Jobs to the Database</Button>
-        <Button className='contentModifyButton' onClick={readJobsData}>Get Jobs from the Database</Button>
+        <Button className='roleSearchButton' onClick={addJobsData}>Add Jobs to the Database</Button>
+        <Button className='roleSearchButton' onClick={readJobsData}>Get Jobs from the Database</Button>
       </div>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} >
+      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{overflowY: 'auto', maxHeight: 300}}>
         <p>{roleDetails}</p>
       </Card>
     </div>

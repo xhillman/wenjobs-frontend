@@ -7,12 +7,16 @@ const { Content } = Layout;
 function RolePageLayout() {
 
   const [keyword, setKeyword] = useState();
+  const [isRemote, setIsRemote] = useState(false);
   const [filterParams, setFilterParams] = useState({});
   const [needReset, setNeedReset] = useState(false);
 
   const getKeyword = (e) => {
     setKeyword(e);
-    console.log('keyword', keyword)
+  }
+
+  const getRemote = (e) => {
+    setIsRemote(e.target.checked);
   }
 
   const applyFilter = () => {
@@ -21,10 +25,16 @@ function RolePageLayout() {
         keyword: keyword
       })
     }
+    if (isRemote) {
+      setFilterParams({...filterParams, 
+        remote: isRemote
+      })
+    }
     setNeedReset(false);
   }
 
   const clearFilter = () => {
+    setFilterParams({});
     setNeedReset(true);
   }
 
@@ -40,8 +50,8 @@ function RolePageLayout() {
               minHeight: 280,
             }}
           >
-            <div className='contentWrapper'>
-            <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter}/>
+            <div className='roleContentWrapper'>
+            <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote}/>
             <RoleTable filterParams={filterParams} needReset={needReset}/>
             </div>
           </Content>
