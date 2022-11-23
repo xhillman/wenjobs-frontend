@@ -41,10 +41,10 @@ const PeopleTable = () => {
       }
     });
   }
+  console.log('papaarse connections ',connectionsData);
 
   const addConnectionsData = async () => {
     const batch = writeBatch(db);
-
     try {
       if (connectionsData) {
         connectionsData.forEach(element => {
@@ -83,7 +83,6 @@ const PeopleTable = () => {
     setConnectionsData(connectionsArray);
     console.log(connectionsArray[0])
   }
-
 
   return (
     <>

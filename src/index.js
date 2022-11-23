@@ -1,8 +1,7 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import App from './App';
-import Home from './Components/Home';
+import App from './App';
 import Companies from './Components/Companies/layout';
 import Roles from './Components/Roles/layout';
 import People from './Components/People/layout';
@@ -11,6 +10,9 @@ import {
   createBrowserRouter,
   RouterProvider
 } from 'react-router-dom';
+import Home from './Components/Home';
+// import store from './Store';
+// import { Provider } from 'react-redux';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: '/People',
+    path: '/Connections',
     element: <People />,
     errorElement: <ErrorPage />
   }
