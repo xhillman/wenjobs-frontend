@@ -33,14 +33,13 @@ function RoleForm(props) {
 
   return (
     <div className='roleFormWrapper'>
-      <Button onClick={applyFilter}>Apply</Button>
-      <Button onClick={clearFilter}>Clear</Button>
+
       <Form
         labelCol={{
           span: 15,
         }}
         wrapperCol={{
-          span: 15,
+          span: 20,
         }}
         layout="vertical"
       >
@@ -92,6 +91,8 @@ function RoleForm(props) {
             }}
           />
         </Form.Item>
+        <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
+      <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
       </Form>
     </div>
   );
