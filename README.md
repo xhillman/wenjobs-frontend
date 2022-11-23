@@ -26,6 +26,20 @@ Why should we care about your product?
 
 -   One of the hardest parts of the job hunt is networking---finding those people who can actually help you get your application seen and your voice heard. Often these quick conversations can lead to a job much more efficiently and effectively than any other job-seeking technique.
 
+## API Server
+  - https://wen-jobs-server-deploy-prod.onrender.com
+    - Endpoints:
+      - /updateJobs - returns response array with most recent job listings within last 12h
+      - /getJobs - returns array of job listings
+
+## Database Management
+
+
+## Redux ToolKit
+
+
+## Ant UI
+
 
 Domain Modeling
 ---------------
