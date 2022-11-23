@@ -30,107 +30,52 @@ const CompanyTable = () => {
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  // const handleFile = (info) => {
+  const addJobsData = async () => {
+    console.log(jobData)
+    const batch = writeBatch(db);
 
-  //   console.log(info);
-  //   Papa.parse(info.file, {
-  //     header: true,
-  //     complete: (result) => {
-  //       console.log(result.data);
-  //       setConnectionsData(result.data)
-  //     }
-  //   });
-  // }
+    try {
+      if (jobData) {
+        jobData.jobs.forEach(job => {
+          let ref = doc(db, "jobs", job.key);
+          batch.set(ref,
+            {
+              "job": job.job,
+              "company": job.company,
+              "location": job.location,
+              "post_date": job.post_date,
+              "link": job.link,
+              "key": job.key,
+              "details": job.details,
+              "tags": job.tags
+            });
+        });
+      }
 
-  // const addConnectionsData = async () => {
-  //   const batch = writeBatch(db);
-
-  //   try {
-  //     if (connectionsData) {
-  //       connectionsData.forEach(element => {
-  //         let ref = doc(db, "connections", element['First Name']);
-  //         batch.set(ref,
-  //           {
-  //             'First Name': element['First Name'],
-  //             "Last Name": element['Last Name'],
-  //             "Email Address": element['Email Address'],
-  //             "Company": element.Company,
-  //             "Position": element.Position,
-  //             "Connected On": element['Connected On'],
-  //           });
-  //       });
-  //     }
-
-  //     await batch.commit();
+      await batch.commit();
 
 
-  //   } catch (e) {
-  //     console.error('Error adding document: ', e);
-  //   }
-  // }
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
 
-  // const readConnectionsData = async () => {
+  }
 
-  //   let connectionsArray = [];
+  const readJobsData = async () => {
+    let jobsArray = []
 
-
-  //   const querySnapshot = await getDocs(collection(db, "connections"));
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-  //     const newItem = doc.data();
-  //     connectionsArray.push(newItem);
-  //   });
-  //   setConnectionsData(connectionsArray);
-  // }
-
-
-  // const addJobsData = async () => {
-  //   console.log(jobData)
-  //   const batch = writeBatch(db);
-
-  //   try {
-  //     if (jobData) {
-  //       jobData.jobs.forEach(job => {
-  //         let ref = doc(db, "jobs", job.key);
-  //         batch.set(ref,
-  //           {
-  //             "job": job.job,
-  //             "company": job.company,
-  //             "location": job.location,
-  //             "post_date": job.post_date,
-  //             "link": job.link,
-  //             "key": job.key,
-  //             "details": job.details,
-  //             "tags": job.tags
-  //           });
-  //       });
-  //     }
-
-  //     await batch.commit();
-
-
-  //   } catch (e) {
-  //     console.error('Error adding document: ', e);
-  //   }
-
-
-  // }
-
-  // const readJobsData = async () => {
-  //   let jobsArray = []
-
-  //   const querySnapshot = await getDocs(collection(db, "jobs"));
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-  //     const newItem = doc.data();
-  //     jobsArray.push(newItem);
-  //   });
-  //   setJobsData(jobsArray);
-  // }
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${JSON.stringify(doc)}`);
+      const newItem = doc.data();
+      jobsArray.push(newItem);
+    });
+    setJobsData(jobsArray);
+  }
 
   return (
     <>
-      {/* <Table className='companyTableWrapper' dataSource={jobsData}>
+      <Table className='companyTableWrapper' dataSource={jobsData}>
         <Column title='job' dataIndex='job' key={Math.random()} />
         <Column title='company' dataIndex='company' key={Math.random()} />
         <Column title='location' dataIndex='location' key={Math.random()} />
@@ -141,7 +86,7 @@ const CompanyTable = () => {
       <div className='uploadSectionWrapper'>
         <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
         <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
-      </div> */}
+      </div>
     </>
   );
 }
