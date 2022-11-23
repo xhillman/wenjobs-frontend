@@ -1,15 +1,18 @@
-import { Space, Table, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload, List, UploadProps } from 'antd';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
+import { collection, addDoc, getDoc, writeBatch, doc, updateDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import Column from 'antd/es/table/Column';
+import { useAuth0 } from "@auth0/auth0-react";
 import './style.css'
 
 const PeopleTable = () => {
+
+  const { user, isAuthenticated } = useAuth0();
 
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -20,6 +23,7 @@ const PeopleTable = () => {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
+
   const [connectionsData, setConnectionsData] = useState(null);
 
   // Initialize Firebase
@@ -41,27 +45,16 @@ const PeopleTable = () => {
   }
 
   const addConnectionsData = async () => {
-    const batch = writeBatch(db);
-
+    console.log(user.email)
     try {
       if (connectionsData) {
-        connectionsData.forEach(element => {
-          let ref = doc(db, "connections", element['First Name']);
-          batch.set(ref,
-            {
-              'First Name': element['First Name'],
-              "Last Name": element['Last Name'],
-              "Email Address": element['Email Address'],
-              "Company": element.Company,
-              "Position": element.Position,
-              "Connected On": element['Connected On'],
-            });
+        const ref = doc(db, 'users', user.email);
+        await updateDoc(ref, {
+          connections: connectionsData
         });
+        console.log('added connections data to DB')
+
       }
-
-      await batch.commit();
-
-
     } catch (e) {
       console.error('Error adding document: ', e);
     }
@@ -69,20 +62,23 @@ const PeopleTable = () => {
 
   const readConnectionsData = async () => {
 
-    let connectionsArray = [];
+    // let connectionsArray = [];
 
+    const docRef = doc(db, "users", user.email);
+    const docSnap = await getDoc(docRef);
+    let data;
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      data = docSnap.data().connections
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
 
-    const querySnapshot = await getDocs(collection(db, "connections"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-      const newItem = doc.data();
-      connectionsArray.push(newItem);
-    });
-    setConnectionsData(connectionsArray);
+    console.log(data)
+    setConnectionsData(data);
   }
 
-
-  
   return (
     <>
       <Table className='connectionsTableWrapper' dataSource={connectionsData}>
@@ -97,8 +93,8 @@ const PeopleTable = () => {
         <Upload customRequest={handleFile}>
           <Button icon={<UploadOutlined />}>Click to Upload</Button>
         </Upload>
-        <Button onClick={addConnectionsData}>add new collection item</Button>
-        <Button onClick={readConnectionsData}>add all connections items to state</Button>
+        <Button onClick={addConnectionsData}>add all connections to DB</Button>
+        <Button onClick={readConnectionsData}>read all client from DB</Button>
       </div>
     </>
   );

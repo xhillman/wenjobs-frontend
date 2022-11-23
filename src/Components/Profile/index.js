@@ -59,6 +59,7 @@ const Profile = () => {
     if (user) {
 
       createUser();
+      console.log('creating user in db...');
     }
   }, [])
 

@@ -84,53 +84,53 @@ const CompanyTable = () => {
   // }
 
 
-  const addJobsData = async () => {
-    console.log(jobData)
-    const batch = writeBatch(db);
+  // const addJobsData = async () => {
+  //   console.log(jobData)
+  //   const batch = writeBatch(db);
 
-    try {
-      if (jobData) {
-        jobData.jobs.forEach(job => {
-          let ref = doc(db, "jobs", job.key);
-          batch.set(ref,
-            {
-              "job": job.job,
-              "company": job.company,
-              "location": job.location,
-              "post_date": job.post_date,
-              "link": job.link,
-              "key": job.key,
-              "details": job.details,
-              "tags": job.tags
-            });
-        });
-      }
+  //   try {
+  //     if (jobData) {
+  //       jobData.jobs.forEach(job => {
+  //         let ref = doc(db, "jobs", job.key);
+  //         batch.set(ref,
+  //           {
+  //             "job": job.job,
+  //             "company": job.company,
+  //             "location": job.location,
+  //             "post_date": job.post_date,
+  //             "link": job.link,
+  //             "key": job.key,
+  //             "details": job.details,
+  //             "tags": job.tags
+  //           });
+  //       });
+  //     }
 
-      await batch.commit();
-
-
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
+  //     await batch.commit();
 
 
-  }
+  //   } catch (e) {
+  //     console.error('Error adding document: ', e);
+  //   }
 
-  const readJobsData = async () => {
-    let jobsArray = []
 
-    const querySnapshot = await getDocs(collection(db, "jobs"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-      const newItem = doc.data();
-      jobsArray.push(newItem);
-    });
-    setJobsData(jobsArray);
-  }
+  // }
+
+  // const readJobsData = async () => {
+  //   let jobsArray = []
+
+  //   const querySnapshot = await getDocs(collection(db, "jobs"));
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(`${doc.id} => ${JSON.stringify(doc)}`);
+  //     const newItem = doc.data();
+  //     jobsArray.push(newItem);
+  //   });
+  //   setJobsData(jobsArray);
+  // }
 
   return (
     <>
-      <Table className='companyTableWrapper' dataSource={jobsData}>
+      {/* <Table className='companyTableWrapper' dataSource={jobsData}>
         <Column title='job' dataIndex='job' key={Math.random()} />
         <Column title='company' dataIndex='company' key={Math.random()} />
         <Column title='location' dataIndex='location' key={Math.random()} />
@@ -138,23 +138,10 @@ const CompanyTable = () => {
         <Column title='link' dataIndex='link' key={Math.random()} />
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
-      {/* <Table className='connectionsTableWrapper' dataSource={connectionsData}>
-        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-        <Column title='Company' dataIndex='Company' key={Math.random()} />
-        <Column title='Position' dataIndex='Position' key={Math.random()} />
-        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-      </Table> */}
       <div className='uploadSectionWrapper'>
-        {/* <Upload customRequest={handleFile}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload> */}
-        {/* <Button onClick={addConnectionsData}>add new collection item</Button>
-        <Button onClick={readConnectionsData}>add all connections items to state</Button> */}
         <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
         <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
-      </div>
+      </div> */}
     </>
   );
 }
