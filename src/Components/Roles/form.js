@@ -32,7 +32,7 @@ function RoleForm(props) {
   const { getKeyword, applyFilter, clearFilter } = props;
 
   return (
-    <div className='formWrapper'>
+    <div className='roleFormWrapper'>
       <Button onClick={applyFilter}>Apply</Button>
       <Button onClick={clearFilter}>Clear</Button>
       <Form

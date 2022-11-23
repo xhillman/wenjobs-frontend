@@ -178,7 +178,7 @@ function RoleTable(props) {
         <Button className='contentModifyButton' onClick={addJobsData}>Add Jobs to the Database</Button>
         <Button className='contentModifyButton' onClick={readJobsData}>Get Jobs from the Database</Button>
       </div>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} >
+      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{overflowY: 'auto', maxHeight: 300}}>
         <p>{roleDetails}</p>
       </Card>
     </div>
