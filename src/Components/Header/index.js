@@ -4,7 +4,7 @@ import LogoutButton from '../LogoutButton';
 import Profile from '../Profile';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from 'react-router-dom';
-
+import './style.css'
 const { Title, Text } = Typography;
 
 const headerStyle = {
@@ -24,16 +24,7 @@ const userInfoStyle = {
   display: 'flex',
   alignItems: 'center',
 }
-const optionItemStyle = {
-  // display: 'flex',
-  margin: '.5rem',
-  paddingLeft: '.5rem',
-  paddingRight: '.5rem',
-  border: 'solid black 1px',
-  justifyContent: 'space-evenly',
-  color: 'black',
-  borderRadius: '25%'
-}
+
 const optionStyle = {
   marginLeft: '6rem',
   
@@ -51,10 +42,10 @@ function Header() {
           isAuthenticated ?
             <div style={optionStyle}>
 
-              <Link style={optionItemStyle} to='/'>Home</Link>
-              <Link style={optionItemStyle} to='/Companies'>Companies</Link>
-              <Link style={optionItemStyle} to='/Roles'>Roles</Link>
-              <Link style={optionItemStyle} to='/Connections'>Connections</Link>
+              <Link className='linkButton' to='/'>Home</Link>
+              <Link className='linkButton'to='/Companies'>Companies</Link>
+              <Link className='linkButton'to='/Roles'>Roles</Link>
+              <Link className='linkButton'to='/Connections'>Connections</Link>
 
             </div> :
             null
