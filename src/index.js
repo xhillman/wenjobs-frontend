@@ -7,7 +7,7 @@ import Home from './Components/Home';
 import Companies from './Components/Companies/layout';
 import Roles from './Components/Roles/layout';
 import People from './Components/People/layout';
-import ErrorPage from './Components/error-page';
+import ErrorPage from './Components/Roles/error-page';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 

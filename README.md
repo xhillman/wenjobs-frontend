@@ -9,7 +9,7 @@
 - Jack Stubblefield
 
 ## Deployed Site
-- Coming soon!
+[wenjob.xyz]('wenjobs.xyz')
 
 #### Vision
 ------
