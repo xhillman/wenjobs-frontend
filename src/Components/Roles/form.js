@@ -29,7 +29,7 @@ const marks = {
 
 function RoleForm(props) {
 
-  const { getKeyword, applyFilter, clearFilter } = props;
+  const { getKeyword, applyFilter, clearFilter, getRemote } = props;
 
   return (
     <div className='formWrapper'>
@@ -51,7 +51,7 @@ function RoleForm(props) {
           <Input />
         </Form.Item>
         <Form.Item label="Remote">
-          <Checkbox />
+          <Checkbox onChange={(e) => getRemote(e)}/>
         </Form.Item>
         <Form.Item label="Role Type">
           <Select mode="multiple"
