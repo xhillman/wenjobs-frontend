@@ -2,7 +2,7 @@
   padding: 1rem;
   /* background-color: rgb(54, 54, 54); */
   margin: auto;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 .site-layout-background{
@@ -16,23 +16,25 @@
   border-radius: 30px;
   padding: 1rem;
 }
-.contentWrapper {
+.companyContentWrapper {
   background-color: black;
   border-radius: 30px;
-  display: inline-flex;
+  display: flex;
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
-  max-width: 1080px;
+  width: 1080px;
+  height: 785px;
   margin: auto;
   left: 0;
   right: 0;
+  top: 0;
 }
 
 .formWrapper{
   background-color: rgba(162, 160, 161, 0.25);
   color: white;
   padding: .75rem;
-  min-width: 300px;
-  border-radius: 30px 0px 0px 30px;
+  width: 300px;
+  border-radius: 30px;
 }
 
 .companyTableWrapper {

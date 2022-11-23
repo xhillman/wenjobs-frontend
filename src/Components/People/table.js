@@ -41,11 +41,11 @@ const PeopleTable = () => {
       complete: (result) => {
         console.log(result.data);
         setConnectionsData(result.data)
-        console.log('papaarse connections ',connectionsData)
+        console.log('papaarse connections ', connectionsData)
       }
     });
   }
-  console.log('papaarse connections ',connectionsData);
+  console.log('papaarse connections ', connectionsData);
 
   const addConnectionsData = async () => {
     console.log(user.email)
@@ -84,10 +84,10 @@ const PeopleTable = () => {
 
   return (
     <>
-      <div className='formWrapper'>
+      <div className='peopleFormWrapper'>
         <Form
-          labelCol={{span: 15}}
-          wrapperCol={{span: 15}}
+          labelCol={{ span: 15 }}
+          wrapperCol={{ span: 20 }}
           layout="vertical"
         >
           <Form.Item label="Search by First Name">
@@ -102,23 +102,25 @@ const PeopleTable = () => {
             <Input />
           </Form.Item>
         </Form>
-      </div>
-      <Table pagination={{ pageSize: '5'}}
-      defaultPageSize={5} 
-      className='connectionsTableWrapper' dataSource={connectionsData}>
-        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-        <Column title='Company' dataIndex='Company' key={Math.random()} />
-        <Column title='Position' dataIndex='Position' key={Math.random()} />
-        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-      </Table>
-      <div className='uploadSectionWrapper'>
-        <Upload customRequest={handleFile}>
-          <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
-        </Upload>
-        <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
-        <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
+      </div >
+      <div className='connectionsTableWrapper'>
+        <Table pagination={{ pageSize: '5' }}
+          defaultPageSize={5}
+          dataSource={connectionsData}>
+          <Column title='First Name' dataIndex='First Name' key={Math.random()} />
+          <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
+          <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
+          <Column title='Company' dataIndex='Company' key={Math.random()} />
+          <Column title='Position' dataIndex='Position' key={Math.random()} />
+          <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
+        </Table>
+        <div className='uploadSectionWrapper'>
+          <Upload customRequest={handleFile}>
+            <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
+          <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
+          <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
+          </Upload>
+        </div>
       </div>
     </>
   );

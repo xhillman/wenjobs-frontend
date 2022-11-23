@@ -38,7 +38,7 @@ function CompanyPageLayout({ props }) {
               minHeight: 280,
             }}
           >
-            <div className='contentWrapper'>
+            <div className='companyContentWrapper'>
             <CompanyForm />
             <CompanyTable />
             {/* {

@@ -175,10 +175,10 @@ function RoleTable(props) {
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
       <div className='uploadSectionWrapper'>
-        <Button className='contentModifyButton' onClick={addJobsData}>Add Jobs to the Database</Button>
-        <Button className='contentModifyButton' onClick={readJobsData}>Get Jobs from the Database</Button>
+        <Button className='roleSearchButton' onClick={addJobsData}>Add Jobs to the Database</Button>
+        <Button className='roleSearchButton' onClick={readJobsData}>Get Jobs from the Database</Button>
       </div>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} >
+      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{overflowY: 'auto', maxHeight: 300}}>
         <p>{roleDetails}</p>
       </Card>
     </div>
