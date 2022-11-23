@@ -18,7 +18,7 @@ function PeoplePageLayout() {
               minHeight: 280,
             }}
           >
-            <div className='contentWrapper'>
+            <div className='peopleContentWrapper'>
             {/* <PeopleForm /> */}
             <PeopleTable />
             </div>

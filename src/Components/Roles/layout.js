@@ -50,7 +50,7 @@ function RolePageLayout() {
               minHeight: 280,
             }}
           >
-            <div className='contentWrapper'>
+            <div className='roleContentWrapper'>
             <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote}/>
             <RoleTable filterParams={filterParams} needReset={needReset}/>
             </div>
