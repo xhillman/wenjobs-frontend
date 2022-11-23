@@ -52,7 +52,7 @@ import './style.css'
       title: 'Apply Now!',
       dataIndex: 'link',
       key: 'link',
-      render: (link) => <Button type="primary" href={link}>Apply !</Button>
+      render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
     },
   ];
 
