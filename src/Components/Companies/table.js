@@ -84,8 +84,8 @@ const CompanyTable = () => {
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
       <div className='uploadSectionWrapper'>
-        <Button onClick={addJobsData}>ADD JOBS TO DB</Button>
-        <Button onClick={readJobsData}>READ JOBS FROM DB</Button>
+        <Button className='contentModifyButton' onClick={addJobsData}>Add Jobs to the Database</Button>
+        <Button className='contentModifyButton' onClick={readJobsData}>Get Jobs from the Database</Button>
       </div>
     </>
   );

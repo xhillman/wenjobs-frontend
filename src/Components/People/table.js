@@ -115,10 +115,10 @@ const PeopleTable = () => {
       </Table>
       <div className='uploadSectionWrapper'>
         <Upload customRequest={handleFile}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
         </Upload>
-        <Button onClick={addConnectionsData}>add all connections to DB</Button>
-        <Button onClick={readConnectionsData}>read all client from DB</Button>
+        <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
+        <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
       </div>
     </>
   );
