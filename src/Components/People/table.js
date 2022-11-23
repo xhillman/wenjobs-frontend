@@ -39,10 +39,10 @@ const PeopleTable = () => {
       }
     });
   }
+  console.log('papaarse connections ',connectionsData);
 
   const addConnectionsData = async () => {
     const batch = writeBatch(db);
-
     try {
       if (connectionsData) {
         connectionsData.forEach(element => {
@@ -82,7 +82,7 @@ const PeopleTable = () => {
   }
 
 
-  
+  console.log('HELOOOOOOOOOOO', connectionsData);
   return (
     <>
       <Table className='connectionsTableWrapper' dataSource={connectionsData}>

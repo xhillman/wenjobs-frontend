@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import CompanyTable from './table';
 import CompanyForm from './form';
+import Description from '../Descriptions/Description';
+import axios from 'axios';
 const { Content } = Layout;
 
-function CompanyPageLayout() {
+function CompanyPageLayout({ props }) {
+
+  const [jobListings, setJobListings] = useState([]);
+
+  const data = async () => {
+    try {
+      let data = await axios.get('https://wen-jobs-server-deploy-prod.onrender.com/updateJobs');
+      let sanitizedData = data.data;
+      setJobListings(sanitizedData);
+      console.log(sanitizedData);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    data();
+  }, []);
+  
 
   return (
     <Layout>
@@ -21,6 +41,15 @@ function CompanyPageLayout() {
             <div className='contentWrapper'>
             <CompanyForm />
             <CompanyTable />
+            {/* {
+              jobListings.map(listing => {
+                return (
+                  <Description 
+                    job={listing}
+                  />
+                )
+              })
+            } */}
             </div>
           </Content>
         </Layout>
