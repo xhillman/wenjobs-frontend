@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
-import PeopleTable from './table';
-import PeopleForm from './form';
+import RoleTable from './table';
+import RoleForm from './form';
 const { Content } = Layout;
 
-function PeoplePageLayout() {
+function RolePageLayout() {
 
   return (
     <Layout>
@@ -19,8 +19,8 @@ function PeoplePageLayout() {
             }}
           >
             <div className='contentWrapper'>
-            {/* <PeopleForm /> */}
-            <PeopleTable />
+            <RoleForm />
+            <RoleTable />
             </div>
           </Content>
         </Layout>
@@ -29,4 +29,4 @@ function PeoplePageLayout() {
   );
 }
 
-export default PeoplePageLayout
+export default RolePageLayout

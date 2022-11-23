@@ -1,6 +1,6 @@
 import { Table, Tag } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload, List, UploadProps } from 'antd';
+import { Button, message, Upload, List, UploadProps, Form, Input } from 'antd';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDoc, writeBatch, doc, updateDoc } from 'firebase/firestore';
@@ -25,6 +25,7 @@ const PeopleTable = () => {
   };
 
   const [connectionsData, setConnectionsData] = useState(null);
+  const [searchText, setSearchText] = useState(null);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -40,9 +41,11 @@ const PeopleTable = () => {
       complete: (result) => {
         console.log(result.data);
         setConnectionsData(result.data)
+        console.log('papaarse connections ',connectionsData)
       }
     });
   }
+  console.log('papaarse connections ',connectionsData);
 
   const addConnectionsData = async () => {
     console.log(user.email)
@@ -81,7 +84,28 @@ const PeopleTable = () => {
 
   return (
     <>
-      <Table className='connectionsTableWrapper' dataSource={connectionsData}>
+      <div className='formWrapper'>
+        <Form
+          labelCol={{span: 15}}
+          wrapperCol={{span: 15}}
+          layout="vertical"
+        >
+          <Form.Item label="Search by First Name">
+            <Input.Search onSearch={(value) => {
+              setSearchText(value);
+            }} />
+          </Form.Item>
+          <Form.Item label="Search by Last Name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Search by Company">
+            <Input />
+          </Form.Item>
+        </Form>
+      </div>
+      <Table pagination={{ pageSizeOptions: ['5', '10'] }}
+      defaultPageSize={5}
+      className='connectionsTableWrapper' dataSource={connectionsData}>
         <Column title='First Name' dataIndex='First Name' key={Math.random()} />
         <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
         <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />

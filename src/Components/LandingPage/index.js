@@ -1,6 +1,6 @@
 import { Typography, Image } from 'antd';
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import { BrowserRouter, Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
