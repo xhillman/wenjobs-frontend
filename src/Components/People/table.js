@@ -2,7 +2,7 @@ import { Table, Tag } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload, List, UploadProps, Form, Input } from 'antd';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getDocFromCache, getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDoc, writeBatch, doc, updateDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
@@ -65,65 +65,79 @@ const PeopleTable = () => {
 
   const readConnectionsData = async () => {
 
-    // let connectionsArray = [];
+    // check the firebase cache to see if a snapshot exists
+    // if it does, use that snapshot
+    // if it doesn't, get a new snapshot and save it to the cache
 
     const docRef = doc(db, "users", user.email);
-    const docSnap = await getDoc(docRef);
     let data;
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      data = docSnap.data().connections
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
+    try {
+      // const doc = await getDocFromCache(docRef);
+      const doc = await doc
+      console.log('Cached document data:', doc.data());
+    } catch (error) {
+      console.log('error', error)
     }
 
-    console.log(data)
-    setConnectionsData(data);
-  }
 
-  return (
-    <>
-      <div className='peopleFormWrapper'>
-        <Form
-          labelCol={{ span: 15 }}
-          wrapperCol={{ span: 20 }}
-          layout="vertical"
-        >
-          <Form.Item label="Search by First Name">
-            <Input.Search onSearch={(value) => {
-              setSearchText(value);
-            }} />
-          </Form.Item>
-          <Form.Item label="Search by Last Name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Search by Company">
-            <Input />
-          </Form.Item>
-        </Form>
-      </div >
-      <div className='connectionsTableWrapper'>
-        <Table pagination={{ pageSize: '5' }}
-          defaultPageSize={5}
-          dataSource={connectionsData}>
-          <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-          <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-          <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-          <Column title='Company' dataIndex='Company' key={Math.random()} />
-          <Column title='Position' dataIndex='Position' key={Math.random()} />
-          <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-        </Table>
-        <div className='uploadSectionWrapper'>
-          <Upload customRequest={handleFile}>
-            <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
+  // const docRef = doc(db, "users", user.email);
+  // const docSnap = await getDoc(docRef);
+  // let data;
+
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  //   data = docSnap.data().connections
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
+
+  // console.log(data)
+  // setConnectionsData(data);
+}
+
+return (
+  <>
+    <div className='peopleFormWrapper'>
+      <Form
+        labelCol={{ span: 15 }}
+        wrapperCol={{ span: 20 }}
+        layout="vertical"
+      >
+        <Form.Item label="Search by First Name">
+          <Input.Search onSearch={(value) => {
+            setSearchText(value);
+          }} />
+        </Form.Item>
+        <Form.Item label="Search by Last Name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Search by Company">
+          <Input />
+        </Form.Item>
+      </Form>
+    </div >
+    <div className='connectionsTableWrapper'>
+      <Table pagination={{ pageSize: '5' }}
+        defaultPageSize={5}
+        dataSource={connectionsData}>
+        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
+        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
+        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
+        <Column title='Company' dataIndex='Company' key={Math.random()} />
+        <Column title='Position' dataIndex='Position' key={Math.random()} />
+        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
+      </Table>
+      <div className='uploadSectionWrapper'>
+        <Upload customRequest={handleFile}>
+          <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
           <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
           <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
-          </Upload>
-        </div>
+        </Upload>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 }
 
 export default PeopleTable;
