@@ -10,6 +10,7 @@ import Column from 'antd/es/table/Column';
 import { useAuth0 } from "@auth0/auth0-react";
 import './style.css'
 
+
 const PeopleTable = () => {
 
   const { user, isAuthenticated } = useAuth0();
@@ -23,6 +24,8 @@ const PeopleTable = () => {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
+
+
 
   const [connectionsData, setConnectionsData] = useState(null);
   const [searchText, setSearchText] = useState(null);
@@ -41,11 +44,11 @@ const PeopleTable = () => {
       complete: (result) => {
         console.log(result.data);
         setConnectionsData(result.data)
-        console.log('papaarse connections ', connectionsData)
+        console.log('papa parse connections ', connectionsData)
       }
     });
   }
-  console.log('papaarse connections ', connectionsData);
+  console.log('papa parse connections ', connectionsData);
 
   const addConnectionsData = async () => {
     console.log(user.email)
@@ -65,79 +68,67 @@ const PeopleTable = () => {
 
   const readConnectionsData = async () => {
 
-    // check the firebase cache to see if a snapshot exists
-    // if it does, use that snapshot
-    // if it doesn't, get a new snapshot and save it to the cache
 
     const docRef = doc(db, "users", user.email);
+    let docSnap = await getDocFromCache(docRef);
     let data;
-    try {
-      // const doc = await getDocFromCache(docRef);
-      const doc = await doc
-      console.log('Cached document data:', doc.data());
-    } catch (error) {
-      console.log('error', error)
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      data = docSnap.data().connections
+    } else {
+      // doc.data() will be undefined in this case
+      let docSnap = await getDoc(docRef);
+      data = docSnap.data().connections
+      console.log("No such document!");
     }
 
+    console.log(data)
+    setConnectionsData(data);
+  }
 
-  // const docRef = doc(db, "users", user.email);
-  // const docSnap = await getDoc(docRef);
-  // let data;
-
-  // if (docSnap.exists()) {
-  //   console.log("Document data:", docSnap.data());
-  //   data = docSnap.data().connections
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  // }
-
-  // console.log(data)
-  // setConnectionsData(data);
-}
-
-return (
-  <>
-    <div className='peopleFormWrapper'>
-      <Form
-        labelCol={{ span: 15 }}
-        wrapperCol={{ span: 20 }}
-        layout="vertical"
-      >
-        <Form.Item label="Search by First Name">
-          <Input.Search onSearch={(value) => {
-            setSearchText(value);
-          }} />
-        </Form.Item>
-        <Form.Item label="Search by Last Name">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Search by Company">
-          <Input />
-        </Form.Item>
-      </Form>
-    </div >
-    <div className='connectionsTableWrapper'>
-      <Table pagination={{ pageSize: '5' }}
-        defaultPageSize={5}
-        dataSource={connectionsData}>
-        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-        <Column title='Company' dataIndex='Company' key={Math.random()} />
-        <Column title='Position' dataIndex='Position' key={Math.random()} />
-        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-      </Table>
-      <div className='uploadSectionWrapper'>
-        <Upload customRequest={handleFile}>
-          <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
-          <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
-          <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
-        </Upload>
+  return (
+    <>
+      <div className='peopleFormWrapper'>
+        <Form
+          labelCol={{ span: 15 }}
+          wrapperCol={{ span: 20 }}
+          layout="vertical"
+        >
+          <Form.Item label="Search by First Name">
+            <Input.Search onSearch={(value) => {
+              setSearchText(value);
+            }} />
+          </Form.Item>
+          <Form.Item label="Search by Last Name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Search by Company">
+            <Input />
+          </Form.Item>
+        </Form>
+      </div >
+      <div className='connectionsTableWrapper'>
+        <Table pagination={{ pageSize: '5' }}
+          defaultPageSize={5}
+          dataSource={connectionsData}>
+          <Column title='First Name' dataIndex='First Name' key={Math.random()} />
+          <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
+          <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
+          <Column title='Company' dataIndex='Company' key={Math.random()} />
+          <Column title='Position' dataIndex='Position' key={Math.random()} />
+          <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
+        </Table>
+        <div className='uploadSectionWrapper'>
+          <Upload customRequest={handleFile}>
+            <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
+            <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
+            <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
+          </Upload>
+        </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
 }
 
 export default PeopleTable;
