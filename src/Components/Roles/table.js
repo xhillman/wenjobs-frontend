@@ -5,9 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
 
-import axios from 'axios';
 import './style.css'
-// import { render } from '@testing-library/react';
 
   const columns = [
     {
@@ -80,34 +78,7 @@ function RoleTable(props) {
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  const addJobsData = async () => {
-    console.log(jobsData)
-    const batch = writeBatch(db);
-
-    try {
-      if (jobsData) {
-        jobsData.jobs.forEach(job => {
-          let ref = doc(db, "jobs", job.key);
-          batch.set(ref,
-            {
-              "job": job.job,
-              "company": job.company,
-              "location": job.location,
-              "post_date": job.post_date,
-              "link": job.link,
-              "key": job.key,
-              "details": job.details,
-              "tags": job.tags
-            });
-        });
-      }
-
-      await batch.commit();
-
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
-  }
+  
 
   const readJobsData = async () => {
     let jobsArray = []
