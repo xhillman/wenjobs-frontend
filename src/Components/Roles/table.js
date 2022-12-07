@@ -7,56 +7,56 @@ import { collection, addDoc, getDocs, writeBatch, doc, startAfter } from 'fireba
 
 import './style.css'
 
-  const columns = [
-    {
-      title: 'Job',
-      dataIndex: 'job',
-      key: 'job',
-    },
-    {
-      title: 'Posted',
-      dataIndex: 'post_date',
-      key: 'post_date',
-    },
-    {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
-    },
-    {
-      title: 'location',
-      dataIndex: 'location',
-      key: 'location',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            return (
-              <Space wrap>
-                <Tag key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              </Space>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Apply Now!',
-      dataIndex: 'link',
-      key: 'link',
-      render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
-    },
-  ];
+const columns = [
+  {
+    title: 'Job',
+    dataIndex: 'job',
+    key: 'job',
+  },
+  {
+    title: 'Posted',
+    dataIndex: 'post_date',
+    key: 'post_date',
+  },
+  {
+    title: 'Company',
+    dataIndex: 'company',
+    key: 'company',
+  },
+  {
+    title: 'location',
+    dataIndex: 'location',
+    key: 'location',
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: (_, { tags }) => (
+      <>
+        {tags.map((tag) => {
+          return (
+            <Space wrap>
+              <Tag key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            </Space>
+          );
+        })}
+      </>
+    ),
+  },
+  {
+    title: 'Apply Now!',
+    dataIndex: 'link',
+    key: 'link',
+    render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
+  },
+];
 
 function RoleTable(props) {
 
-  const {filterParams, needReset } = props;
+  const { filterParams, needReset } = props;
 
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -67,25 +67,26 @@ function RoleTable(props) {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
-  //Just a comment to update dev
+
   // const [jobsData, setJobsData] = useState([]);
   const [jobsRef, setJobsRef] = useState([]);
   // const [connectionsData, setConnectionsData] = useState(null);
-  
+
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  
+
   const [jobsData, setJobsData] = useState([]);
+  const [lastVisible, setLastVisible] = useState(null);
 
-  const readJobsData = async () => {
-    let jobsArray = []
+  const fetchJobs = async () => {
 
-    const first = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10));
-    const documentSnapshots = await getDocs(first);
+
+    const firstQuery = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(30));
+    const documentSnapshots = await getDocs(firstQuery);
 
     // get the last visible document
     const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
@@ -93,9 +94,21 @@ function RoleTable(props) {
 
     //construct a new query starting at this document,
     // get the next 10 jobs
-    const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
-   
+    setJobsData(documentSnapshots.docs.map(doc => doc.data()));
+    setLastVisible(lastVisible);
+
   }
+
+  const fetchMoreJobs = async () => {
+    const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
+    const documentSnapshots = await getDocs(next);
+
+    setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
+    setJobsData([...jobsData, ...documentSnapshots.docs.map(doc => doc.data())]);
+  }
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   // const job_listings = async () => {
   //   try {
@@ -133,13 +146,13 @@ function RoleTable(props) {
     }
   }
 
-  useEffect(() => {
-    filterJobs();
-  }, [filterParams]);
+  // useEffect(() => {
+  //   filterJobs();
+  // }, [filterParams]);
 
-  useEffect(() => {
-    setJobsData(jobsRef);
-  }, [needReset])
+  // useEffect(() => {
+  //   setJobsData(jobsRef);
+  // }, [needReset])
 
   const [roleDetails, setRoleDetails] = useState(null)
   const handleRowSelection = {
@@ -156,8 +169,10 @@ function RoleTable(props) {
   return (
     <div className='roleTableWrapper'>
       <Table columns={columns} dataSource={jobsData} pagination={{
-        pageSize: 5,
+        pageSize: 10,
+        showSizeChanger: false,
       }}
+        onChange={fetchMoreJobs}
         onRow={record => ({
           onClick: (e) => setRoleDetails(`${record.details}`)
         })}
@@ -171,10 +186,8 @@ function RoleTable(props) {
         <Column title='link' dataIndex='link' key={Math.random()} />
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
-      <div className='uploadSectionWrapper'>
-        <Button className='roleSearchButton' onClick={readJobsData}>Get Jobs from the Database</Button>
-      </div>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{overflowY: 'auto', maxHeight: 300}}>
+      <Button onClick={fetchMoreJobs}>Load More</Button>
+      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
         <p>{roleDetails}</p>
       </Card>
     </div>
