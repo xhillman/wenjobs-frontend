@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Space, Tag, Card } from 'antd';
 import Column from 'antd/es/table/Column';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc, getDocs, writeBatch, doc } from 'firebase/firestore';
+import { getFirestore, limit, orderBy, query } from 'firebase/firestore';
+import { collection, addDoc, getDocs, writeBatch, doc, startAfter } from 'firebase/firestore';
 
 import './style.css'
 
@@ -79,35 +79,38 @@ function RoleTable(props) {
   const db = getFirestore(app);
 
   
+  const [jobsData, setJobsData] = useState([]);
 
   const readJobsData = async () => {
     let jobsArray = []
 
-    const querySnapshot = await getDocs(collection(db, "jobs"));
-    querySnapshot.forEach((doc) => {
-      // console.log(`${doc.id} => ${JSON.stringify(doc)}`);
-      const newItem = doc.data();
-      jobsArray.push(newItem);
-    });
-    setJobsData(jobsArray);
-    setJobsRef(jobsArray);
+    const first = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10));
+    const documentSnapshots = await getDocs(first);
+
+    // get the last visible document
+    const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    console.log("last", lastVisible);
+
+    //construct a new query starting at this document,
+    // get the next 10 jobs
+    const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
+   
   }
 
-  const [jobsData, setJobsData] = useState([]);
-  const job_listings = async () => {
-    try {
-      let data = await axios.get(`${process.env.REACT_APP_SERVER}/updateJobs`);
-      let sanitizedData = data.data;
-      sanitizedData.shift()
-      setJobsData(sanitizedData);
-      setJobsRef(sanitizedData);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  useEffect(() => {
-    job_listings();
-  }, []);
+  // const job_listings = async () => {
+  //   try {
+  //     let data = await axios.get(`${process.env.REACT_APP_SERVER}/updateJobs`);
+  //     let sanitizedData = data.data;
+  //     sanitizedData.shift()
+  //     setJobsData(sanitizedData);
+  //     setJobsRef(sanitizedData);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+  // useEffect(() => {
+  //   readJobsData();
+  // }, []);
 
   const filterJobs = () => {
     let allJobs = [...jobsData];
@@ -169,7 +172,6 @@ function RoleTable(props) {
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
       <div className='uploadSectionWrapper'>
-        <Button className='roleSearchButton' onClick={addJobsData}>Add Jobs to the Database</Button>
         <Button className='roleSearchButton' onClick={readJobsData}>Get Jobs from the Database</Button>
       </div>
       <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{overflowY: 'auto', maxHeight: 300}}>
