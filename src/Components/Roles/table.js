@@ -54,9 +54,8 @@ const columns = [
   },
 ];
 
-function RoleTable(props) {
+function RoleTable() {
 
-  const { filterParams, needReset } = props;
 
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -83,8 +82,7 @@ function RoleTable(props) {
   const [lastVisible, setLastVisible] = useState(null);
 
   const fetchJobs = async () => {
-
-
+    // get the first 30 jobs on page load
     const firstQuery = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(30));
     const documentSnapshots = await getDocs(firstQuery);
 
@@ -92,9 +90,10 @@ function RoleTable(props) {
     const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
     console.log("last", lastVisible);
 
-    //construct a new query starting at this document,
-    // get the next 10 jobs
+    // store the first 30 jobs in state
     setJobsData(documentSnapshots.docs.map(doc => doc.data()));
+
+    // store the last visible job in state as a reference for the next query
     setLastVisible(lastVisible);
 
   }
@@ -106,53 +105,11 @@ function RoleTable(props) {
     setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
     setJobsData([...jobsData, ...documentSnapshots.docs.map(doc => doc.data())]);
   }
+
+  // fetch the first 30 jobs on page load
   useEffect(() => {
     fetchJobs();
   }, []);
-
-  // const job_listings = async () => {
-  //   try {
-  //     let data = await axios.get(`${process.env.REACT_APP_SERVER}/updateJobs`);
-  //     let sanitizedData = data.data;
-  //     sanitizedData.shift()
-  //     setJobsData(sanitizedData);
-  //     setJobsRef(sanitizedData);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-  // useEffect(() => {
-  //   readJobsData();
-  // }, []);
-
-  const filterJobs = () => {
-    let allJobs = [...jobsData];
-    let filteredJobs;
-    if (filterParams.hasOwnProperty('keyword') || filterParams.hasOwnProperty('location')) {
-      if (filterParams.keyword !== '') {
-        filteredJobs = allJobs.filter(job => {
-          // console.log('Job:', job.job, typeof job.job);
-          return job.job.toLowerCase().includes(filterParams.keyword.toLowerCase()) || job.details.toLowerCase().includes(filterParams.keyword.toLowerCase());
-        });
-      }
-      if (filterParams.remote === true) {
-        filteredJobs = filteredJobs.filter(job => {
-          return job.location.toLowerCase().includes('remote');
-        });
-      }
-      setJobsData(filteredJobs);
-    } else {
-      setJobsData(jobsRef);
-    }
-  }
-
-  // useEffect(() => {
-  //   filterJobs();
-  // }, [filterParams]);
-
-  // useEffect(() => {
-  //   setJobsData(jobsRef);
-  // }, [needReset])
 
   const [roleDetails, setRoleDetails] = useState(null)
   const handleRowSelection = {
@@ -186,7 +143,6 @@ function RoleTable(props) {
         <Column title='link' dataIndex='link' key={Math.random()} />
         <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
-      <Button onClick={fetchMoreJobs}>Load More</Button>
       <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
         <p>{roleDetails}</p>
       </Card>
