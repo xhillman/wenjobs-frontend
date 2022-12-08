@@ -3,7 +3,7 @@ import { Table, Button, Space, Tag, Card } from 'antd';
 import Column from 'antd/es/table/Column';
 import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
-import db from '../Firebase/firebaseConfig';
+import db from '../Firebase/FirebaseConfig';
 
 import './style.css'
 

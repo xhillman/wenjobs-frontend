@@ -4,7 +4,7 @@ import RoleTable from './table';
 import RoleForm from './form';
 const { Content } = Layout;
 
-function RolePageLayout() {
+function JobsLayout() {
 
   const [keyword, setKeyword] = useState();
   const [isRemote, setIsRemote] = useState(false);
@@ -61,4 +61,4 @@ function RolePageLayout() {
   );
 }
 
-export default RolePageLayout
+export default JobsLayout

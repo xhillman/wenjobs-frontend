@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom/client';
 import Header from './Components/Header';
 import Home from './Components/Home';
 // import LandingPage  from './Components/LandingPage/index'
-import Companies from './Components/Companies/layout';
-import Roles from './Components/Roles/layout';
-import People from './Components/People/layout';
-import ErrorPage from './Components/Roles/error-page';
+// import Companies from './Components/Companies/layout';
+import Jobs from './Components/Jobs/layout';
+import Connections from './Components/Connections/layout';
+import ErrorPage from './Components/Jobs/error-page';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -27,9 +27,9 @@ root.render(
         <Routes>
 
           <Route default path="/" element={<Home />} errorElement={<ErrorPage />} />
-          <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} />
-          <Route default path="/Roles" element={<Roles />} errorElement={<ErrorPage />} />
-          <Route default path="/Connections" element={<People />} errorElement={<ErrorPage />} />
+          {/* <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} /> */}
+          <Route default path="/Jobs" element={<Jobs />} errorElement={<ErrorPage />} />
+          <Route default path="/Connections" element={<Connections />} errorElement={<ErrorPage />} />
 
         </Routes>
 
