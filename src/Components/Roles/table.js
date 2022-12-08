@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Space, Tag, Card } from 'antd';
 import Column from 'antd/es/table/Column';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, limit, orderBy, query } from 'firebase/firestore';
-import { collection, addDoc, getDocs, writeBatch, doc, startAfter } from 'firebase/firestore';
+import { limit, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, startAfter } from 'firebase/firestore';
+import db from '../Firebase/firebaseConfig';
 
 import './style.css'
 
@@ -55,28 +55,6 @@ const columns = [
 ];
 
 function RoleTable() {
-
-
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-  };
-
-  // const [jobsData, setJobsData] = useState([]);
-  const [jobsRef, setJobsRef] = useState([]);
-  // const [connectionsData, setConnectionsData] = useState(null);
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-
 
   const [jobsData, setJobsData] = useState([]);
   const [lastVisible, setLastVisible] = useState(null);
