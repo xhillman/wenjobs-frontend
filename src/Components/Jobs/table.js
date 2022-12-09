@@ -4,6 +4,8 @@ import Column from 'antd/es/table/Column';
 import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
 import db from '../Firebase/FirebaseConfig';
+import { useSelector, useDispatch } from 'react-redux';
+import { setJobs, setLastVisible } from '../../Store/slices/jobs';
 
 import './style.css'
 
@@ -56,33 +58,42 @@ const columns = [
 
 function RoleTable() {
 
+  const jobs = useSelector(state => state.jobs);
+  const dispatch = useDispatch();
   
-  const [jobsData, setJobsData] = useState([]);
-  const [lastVisible, setLastVisible] = useState(null);
+  // const [jobsData, setJobsData] = useState([...jobs.jobs]);
+  // const [lastVisible, setLastVisible] = useState(null);
+
+  // declaring variables from redux state
+  let jobsData = [...jobs.jobs];
+  let lastVisible = jobs.lastVisible;
 
   const fetchJobs = async () => {
     // get the first 30 jobs on page load
     const firstQuery = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(30));
     const documentSnapshots = await getDocs(firstQuery);
 
-    // get the last visible document
-    const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-    console.log("last", lastVisible);
-
     // store the first 30 jobs in state
-    setJobsData(documentSnapshots.docs.map(doc => doc.data()));
+    // jobsData = documentSnapshots.docs.map(doc => doc.data());
+    let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
+    console.log(jobsQuery)
+    let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
-    // store the last visible job in state as a reference for the next query
-    setLastVisible(lastVisible);
+    dispatch(setJobs(jobsQuery));
+    dispatch(setLastVisible(lastQueryItem));
 
   }
 
   const fetchMoreJobs = async () => {
-    const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
-    const documentSnapshots = await getDocs(next);
+    // const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
+    // const documentSnapshots = await getDocs(next);
 
-    setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
-    setJobsData([...jobsData, ...documentSnapshots.docs.map(doc => doc.data())]);
+    // let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
+    // let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+    // //setting results in redux state
+    // dispatch(setJobs([ jobs, ...jobsQuery]));
+    // dispatch(setLastVisible(lastQueryItem));
   }
 
   // fetch the first 30 jobs on page load

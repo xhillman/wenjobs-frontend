@@ -9,6 +9,8 @@ import {
 import { Button } from 'antd';
 
 import './style.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { filterJobs } from '../../Store/slices/jobs';
 
 const options = [{
   label:'Full-Time',
@@ -29,6 +31,10 @@ const marks = {
 
 function RoleForm(props) {
 
+  const jobs = useSelector(state => state.jobs);
+  const dispatch = useDispatch();
+
+
   const { getKeyword, applyFilter, clearFilter, getRemote } = props;
 
   return (
@@ -44,7 +50,7 @@ function RoleForm(props) {
         layout="vertical"
       >
         <Form.Item label="General Keywords">
-          <Input onChange={(e) => getKeyword(e.target.value)}/>
+          <Input onChange={(e) => dispatch(filterJobs(e.target.value))}/>
         </Form.Item>
         <Form.Item label="Role Category">
           <Input />

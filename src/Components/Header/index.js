@@ -44,7 +44,7 @@ function Header() {
 
               <Link className='linkButton' to='/'>Home</Link>
               <Link className='linkButton'to='/Companies'>Companies</Link>
-              <Link className='linkButton'to='/Roles'>Roles</Link>
+              <Link className='linkButton'to='/Jobs'>Jobs</Link>
               <Link className='linkButton'to='/Connections'>Connections</Link>
 
             </div> :

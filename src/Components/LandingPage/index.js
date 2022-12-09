@@ -55,7 +55,7 @@ function LandingPage() {
               <Text>Search By:</Text>
 
               <Link style={optionItemStyle} to='/Companies'>Companies</Link>
-              <Link style={optionItemStyle} to='/Roles'>Roles</Link>
+              <Link style={optionItemStyle} to='/Jobs'>Jobs</Link>
               <Link style={optionItemStyle} to='/Connections'>Connections</Link>
 
 

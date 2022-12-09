@@ -11,8 +11,7 @@ import ErrorPage from './Components/Jobs/error-page';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store';
-
+import { store } from './Store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

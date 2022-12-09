@@ -5,6 +5,7 @@ export const jobsSlice = createSlice({
     initialState: {
         jobs: [],
         lastVisible: null,
+        keyword: "",
     },
     reducers: {
         setJobs: (state, action) => {
@@ -13,9 +14,13 @@ export const jobsSlice = createSlice({
         setLastVisible: (state, action) => {
             state.lastVisible = action.payload;
         },
+        filterJobs: (state, action) => {
+            state.keyword = action.payload;
+
+        },
     },
 });
 
-export const { setJobs, setLastVisible } = jobsSlice.actions;
+export const { setJobs, setLastVisible, filterJobs } = jobsSlice.actions;
 
 export default jobsSlice.reducer;
