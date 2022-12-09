@@ -10,32 +10,35 @@ import Connections from './Components/Connections/layout';
 import ErrorPage from './Components/Jobs/error-page';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      redirectUri={window.location.origin}
-    >
-      <BrowserRouter>
+    <Provider store={store}>
+      <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+        redirectUri={window.location.origin}
+      >
+        <BrowserRouter>
 
-        <Header />
+          <Header />
 
-        <Routes>
+          <Routes>
 
-          <Route default path="/" element={<Home />} errorElement={<ErrorPage />} />
-          {/* <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} /> */}
-          <Route default path="/Jobs" element={<Jobs />} errorElement={<ErrorPage />} />
-          <Route default path="/Connections" element={<Connections />} errorElement={<ErrorPage />} />
+            <Route default path="/" element={<Home />} errorElement={<ErrorPage />} />
+            {/* <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} /> */}
+            <Route default path="/Jobs" element={<Jobs />} errorElement={<ErrorPage />} />
+            <Route default path="/Connections" element={<Connections />} errorElement={<ErrorPage />} />
 
-        </Routes>
+          </Routes>
 
-      </BrowserRouter>
+        </BrowserRouter>
 
-    </Auth0Provider>
-
+      </Auth0Provider>
+    </Provider>
   </React.StrictMode>
 );
