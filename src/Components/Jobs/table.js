@@ -62,11 +62,11 @@ function RoleTable() {
   const dispatch = useDispatch();
   
   // const [jobsData, setJobsData] = useState([...jobs.jobs]);
-  // const [lastVisible, setLastVisible] = useState(null);
+  const [lastVisible, setLastVisible] = useState(null);
 
   // declaring variables from redux state
   let jobsData = [...jobs.jobs];
-  let lastVisible = jobs.lastVisible;
+  // let lastVisible = jobs.lastVisible;
 
   const fetchJobs = async () => {
     // get the first 30 jobs on page load
@@ -78,21 +78,25 @@ function RoleTable() {
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
     console.log(jobsQuery)
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    
 
     dispatch(setJobs(jobsQuery));
-    dispatch(setLastVisible(lastQueryItem));
+    setLastVisible(lastQueryItem);
+    // dispatch(setLastVisible(lastQueryItem));
 
   }
 
   const fetchMoreJobs = async () => {
-    // const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
-    // const documentSnapshots = await getDocs(next);
+    const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
+    const documentSnapshots = await getDocs(next);
 
-    // let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
-    // let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
+    let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
-    // //setting results in redux state
-    // dispatch(setJobs([ jobs, ...jobsQuery]));
+    //setting results in redux state
+    dispatch(setJobs([...jobsData, ...jobsQuery]));
+    setLastVisible(lastQueryItem);
+
     // dispatch(setLastVisible(lastQueryItem));
   }
 
