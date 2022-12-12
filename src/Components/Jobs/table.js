@@ -5,20 +5,20 @@ import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
 import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
-import { setJobs, setLastVisible } from '../../Store/slices/jobs';
+import { setJobs } from '../../Store/slices/jobs';
 
 import './style.css'
 
 const columns = [
   {
-    title: 'Job',
-    dataIndex: 'job',
-    key: 'job',
+    title: 'Job Title',
+    dataIndex: 'title',
+    key: 'title',
   },
   {
     title: 'Posted',
-    dataIndex: 'post_date',
-    key: 'post_date',
+    dataIndex: 'posted',
+    key: 'posted',
   },
   {
     title: 'Company',
@@ -50,8 +50,8 @@ const columns = [
   },
   {
     title: 'Apply Now!',
-    dataIndex: 'link',
-    key: 'link',
+    dataIndex: 'URL',
+    key: 'URL',
     render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
   },
 ];
@@ -61,12 +61,10 @@ function RoleTable() {
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
   
-  // const [jobsData, setJobsData] = useState([...jobs.jobs]);
   const [lastVisible, setLastVisible] = useState(null);
 
   // declaring variables from redux state
   let jobsData = [...jobs.jobs];
-  // let lastVisible = jobs.lastVisible;
 
   const fetchJobs = async () => {
     // get the first 30 jobs on page load
@@ -74,15 +72,12 @@ function RoleTable() {
     const documentSnapshots = await getDocs(firstQuery);
 
     // store the first 30 jobs in state
-    // jobsData = documentSnapshots.docs.map(doc => doc.data());
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
-    console.log(jobsQuery)
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
     
 
     dispatch(setJobs(jobsQuery));
     setLastVisible(lastQueryItem);
-    // dispatch(setLastVisible(lastQueryItem));
 
   }
 
@@ -97,7 +92,6 @@ function RoleTable() {
     dispatch(setJobs([...jobsData, ...jobsQuery]));
     setLastVisible(lastQueryItem);
 
-    // dispatch(setLastVisible(lastQueryItem));
   }
 
   // fetch the first 30 jobs on page load
@@ -130,12 +124,6 @@ function RoleTable() {
         rowSelection={handleRowSelection}
         size='small'
       >
-        <Column title='job' dataIndex='job' key={Math.random()} />
-        <Column title='company' dataIndex='company' key={Math.random()} />
-        <Column title='location' dataIndex='location' key={Math.random()} />
-        <Column title='Post time' dataIndex='post_date' key={Math.random()} />
-        <Column title='link' dataIndex='link' key={Math.random()} />
-        <Column title='tags' dataIndex='tags' key={Math.random()} />
       </Table>
       <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
         <p>{roleDetails}</p>
