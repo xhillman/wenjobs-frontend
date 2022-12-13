@@ -2,32 +2,17 @@ import React from 'react';
 import {
   Form,
   Input,
-  Slider,
   Checkbox,
-  Select
 } from 'antd';
 import { Button } from 'antd';
 
 import './style.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { filterJobs } from '../../Store/slices/jobs';
+import { setKeyword } from '../../Store/slices/jobs';
+import db from '../Firebase/FirebaseConfig';
+import { collection, query, orderBy, where, getDocs } from "firebase/firestore";
 
-const options = [{
-  label:'Full-Time',
-  value:'Full-Time',
-},
-{
-  label:'Part-Time',
-  value:'Part-Time',
-},
-{
-  label:'Contract',
-  value:'Contract',
-}]
-
-const marks = { 
-0: { style: { color: '#fff'}, label: '1'}, 
-100: { style: { color: '#fff'}, label: '5000'}}
 
 function RoleForm(props) {
 
@@ -35,7 +20,23 @@ function RoleForm(props) {
   const dispatch = useDispatch();
 
 
-  const { getKeyword, applyFilter, clearFilter, getRemote } = props;
+  //apply filter using redux store
+  const applyFilter = async () => {
+    if (jobs.keyword) {
+      // query firebase to see if there are any jobs that match the keyword
+      const jobsRef = collection(db, "jobs");
+      const q = query(jobsRef, where("title", "==", jobs.keyword), orderBy("posted", "desc"));
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot)
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    }
+  }
+
+  const clearFilter = () => {
+    dispatch(filterJobs(''))
+  }
 
   return (
     <div className='roleFormWrapper'>
@@ -50,55 +51,13 @@ function RoleForm(props) {
         layout="vertical"
       >
         <Form.Item label="General Keywords">
-          <Input onChange={(e) => dispatch(filterJobs(e.target.value))}/>
+          <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Form.Item>
-        <Form.Item label="Role Category">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Remote">
-          <Checkbox onChange={(e) => getRemote(e)}/>
-        </Form.Item>
-        <Form.Item label="Role Type">
-          <Select mode="multiple"
-            allowClear
-            style={{
-              width: '100%',
-            }}
-            placeholder="Please select"
-            options={options} />
-        </Form.Item>
-        <Form.Item label="Salary">
-          <Slider className='formSlider'
-            range
-            defaultValue={1}
-            marks={marks}
-            tooltip={{
-              placement: 'right'
-            }}
-          />
-        </Form.Item>
-        <Form.Item label="Industry">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Number of Employees">
-          <Slider className='formSlider'
-            defaultValue={5}
-            tooltip={{
-              placement: 'right'
-            }}
-          />
-        </Form.Item>
-        <Form.Item label="Market Cap">
-          <Slider className='formSlider'
-            defaultValue={5}
-            blur
-            tooltip={{
-              placement: 'right',
-            }}
-          />
-        </Form.Item>
+        {/* <Form.Item label="Remote">
+          <Checkbox onChange={(e) => getRemote(e)} />
+        </Form.Item> */}
         <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
-      <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
+        <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
       </Form>
     </div>
   );

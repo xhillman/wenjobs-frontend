@@ -64,7 +64,7 @@ function RoleTable() {
   const [lastVisible, setLastVisible] = useState(null);
 
   // declaring variables from redux state
-  let jobsData = [...jobs.jobs];
+  let jobsData = [...jobs.filteredJobs];
 
   const fetchJobs = async () => {
     // get the first 30 jobs on page load
