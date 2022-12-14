@@ -12,9 +12,14 @@ import { filterJobs } from '../../Store/slices/jobs';
 import { setKeyword } from '../../Store/slices/jobs';
 import db from '../Firebase/FirebaseConfig';
 import { collection, query, orderBy, where, getDocs } from "firebase/firestore";
+import { algoliasearch } from 'algoliasearch';
+
 
 
 function RoleForm(props) {
+
+  // Instantiate the client
+  const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_KEY);
 
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
