@@ -19,7 +19,7 @@ import { algoliasearch } from 'algoliasearch';
 function RoleForm(props) {
 
   // Instantiate the client
-  const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_KEY);
+  const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_API_KEY);
 
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
@@ -27,16 +27,33 @@ function RoleForm(props) {
 
   //apply filter using redux store
   const applyFilter = async () => {
-    if (jobs.keyword) {
-      // query firebase to see if there are any jobs that match the keyword
-      const jobsRef = collection(db, "jobs");
-      const q = query(jobsRef, where("title", "==", jobs.keyword), orderBy("posted", "desc"));
-      const querySnapshot = await getDocs(q);
-      console.log(querySnapshot)
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-      });
-    }
+    // Fetch search results
+    const { results } = await client.search({
+      requests: [
+        {
+          indexName: 'wenjobs',
+          // You can make typos, we handle it
+          query: jobs.keyword,
+          hitsPerPage: 50,
+        },
+      ],
+    });
+    console.log('[Results]', results);
+
+
+
+
+    //* This is the old way of doing it, using firebase
+    // if (jobs.keyword) {
+    //   // query firebase to see if there are any jobs that match the keyword
+    //   const jobsRef = collection(db, "jobs");
+    //   const q = query(jobsRef, where("title", "==", jobs.keyword), orderBy("posted", "desc"));
+    //   const querySnapshot = await getDocs(q);
+    //   console.log(querySnapshot)
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(`${doc.id} => ${doc.data()}`);
+    //   });
+    // }
   }
 
   const clearFilter = () => {
