@@ -42,23 +42,12 @@ function JobsLayout() {
 
   return (
     <Layout>
-      <Layout>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <div className='roleContentWrapper'>
-              <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote} />
-              <RoleTable filterParams={filterParams} needReset={needReset} />
-            </div>
-          </Content>
-        </Layout>
-      </Layout>
+
+
+      <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote} />
+      <RoleTable filterParams={filterParams} needReset={needReset} />
+
+
     </Layout>
   );
 }

@@ -67,27 +67,17 @@ function RoleForm(props) {
   }
 
   return (
-    <div className='roleFormWrapper'>
+    <Form>
+      <Form.Item label="General Keywords">
+        <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
+      </Form.Item>
+      <Form.Item label="Remote">
+        <Checkbox onChange={(e) => getRemote(e)} />
+      </Form.Item>
+      <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
+      <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
+    </Form>
 
-      <Form
-        labelCol={{
-          span: 15,
-        }}
-        wrapperCol={{
-          span: 20,
-        }}
-        layout="vertical"
-      >
-        <Form.Item label="General Keywords">
-          <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
-        </Form.Item>
-        <Form.Item label="Remote">
-          <Checkbox onChange={(e) => getRemote(e)} />
-        </Form.Item>
-        <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
-        <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
-      </Form>
-    </div>
   );
 };
 export default RoleForm;
