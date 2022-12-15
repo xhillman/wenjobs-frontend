@@ -5,7 +5,7 @@ import React from 'react';
 
 const LoginButton = (props) => {
 
-  const { loginWithRedirect, user } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   const handleLogin = async () => {
     await loginWithRedirect();
