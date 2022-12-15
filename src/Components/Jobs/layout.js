@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 import RoleTable from './table';
 import RoleForm from './form';
@@ -21,12 +21,14 @@ function JobsLayout() {
 
   const applyFilter = () => {
     if (keyword) {
-      setFilterParams({...filterParams, 
+      setFilterParams({
+        ...filterParams,
         keyword: keyword
       })
     }
     if (isRemote) {
-      setFilterParams({...filterParams, 
+      setFilterParams({
+        ...filterParams,
         remote: isRemote
       })
     }
@@ -51,8 +53,8 @@ function JobsLayout() {
             }}
           >
             <div className='roleContentWrapper'>
-            <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote}/>
-            <RoleTable filterParams={filterParams} needReset={needReset}/>
+              <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote} />
+              <RoleTable filterParams={filterParams} needReset={needReset} />
             </div>
           </Content>
         </Layout>
