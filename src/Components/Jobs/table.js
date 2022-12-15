@@ -26,34 +26,34 @@ const columns = [
     key: 'company',
   },
   {
-    title: 'location',
+    title: 'Location',
     dataIndex: 'location',
     key: 'location',
   },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          return (
-            <Space wrap>
-              <Tag key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            </Space>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Apply Now!',
-    dataIndex: 'URL',
-    key: 'URL',
-    render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
-  },
+// {
+//   title: 'Tags',
+//   key: 'tags',
+//   dataIndex: 'tags',
+//   render: (_, { tags }) => (
+//     <>
+//       {tags.map((tag) => {
+//         return (
+//           <Space wrap>
+//             <Tag key={tag}>
+//               {tag.toUpperCase()}
+//             </Tag>
+//           </Space>
+//         );
+//       })}
+//     </>
+//   ),
+// },
+// {
+//   title: 'Apply Now!',
+//   dataIndex: 'URL',
+//   key: 'URL',
+//   render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
+// },
 ];
 
 function RoleTable() {
@@ -111,7 +111,7 @@ function RoleTable() {
       console.log(selected, selectedRows, changeRows);
     },
   };
-  
+
   return (
     <>
       <Table columns={columns} dataSource={jobsData} pagination={{

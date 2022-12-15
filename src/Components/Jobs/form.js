@@ -65,9 +65,12 @@ function RoleForm(props) {
   }
 
   return (
-    <Form>
-      <Form.Item label="General Keywords">
-        <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
+    <Form style={{
+      padding: '1rem',
+      position: 'relative',
+    }}>
+      <Form.Item>
+        <Input placeholder='Keywords' onChange={(e) => dispatch(setKeyword(e.target.value))} />
       </Form.Item>
       <Form.Item label="Remote">
         <Checkbox onChange={(e) => getRemote(e)} />
