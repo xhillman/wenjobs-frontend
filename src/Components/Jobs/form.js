@@ -18,14 +18,14 @@ import { algoliasearch } from 'algoliasearch';
 
 function RoleForm(props) {
 
-  // Instantiate the client
+  //* Instantiate the Algolia client
   const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_API_KEY);
 
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
 
 
-  //apply filter using redux store
+  //* apply filter using redux store
   const applyFilter = async () => {
     // Fetch search results
     const { results } = await client.search({
@@ -41,20 +41,13 @@ function RoleForm(props) {
     dispatch(filterJobs(results[0].hits))
   }
 
+  //* resets redux store back to inital call from firebase
   const clearFilter = async () => {
-    const { results } = await client.search({
-      requests: [
-        {
-          indexName: 'wenjobs',
-          query: '',
-          hitsPerPage: 50,
-        },
-      ],
-    });
-    // add results to redux store
-    dispatch(filterJobs(results[0].hits))
+    dispatch(filterJobs(jobs.jobs))
   }
 
+  //* Fetch remote jobs from algolia
+  //* Combines keyword with remote for more robust search
   const getRemote = async (e) => {
     if (e.target.checked) {
       const { results } = await client.search({
