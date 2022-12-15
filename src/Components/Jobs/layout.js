@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 import RoleTable from './table';
 import RoleForm from './form';
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
 function JobsLayout() {
 
@@ -42,12 +42,12 @@ function JobsLayout() {
 
   return (
     <Layout>
-
-
-      <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote} />
-      <RoleTable filterParams={filterParams} needReset={needReset} />
-
-
+      <Sider theme='light' style={{margin: '2rem 1rem 5.5rem 2rem'}}>
+        <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote} />
+      </Sider>
+      <Content style={{ margin: '2rem', }}>
+        <RoleTable filterParams={filterParams} needReset={needReset} />
+      </Content>
     </Layout>
   );
 }

@@ -10,8 +10,6 @@ import './style.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { filterJobs } from '../../Store/slices/jobs';
 import { setKeyword } from '../../Store/slices/jobs';
-import db from '../Firebase/FirebaseConfig';
-import { collection, query, orderBy, where, getDocs } from "firebase/firestore";
 import { algoliasearch } from 'algoliasearch';
 
 

@@ -60,7 +60,7 @@ function RoleTable() {
 
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
-  
+
   const [lastVisible, setLastVisible] = useState(null);
 
   // declaring variables from redux state
@@ -74,7 +74,7 @@ function RoleTable() {
     // store the first 30 jobs in state
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-    
+
 
     dispatch(setJobs(jobsQuery));
     setLastVisible(lastQueryItem);
@@ -111,8 +111,9 @@ function RoleTable() {
       console.log(selected, selectedRows, changeRows);
     },
   };
+  
   return (
-    <div className='roleTableWrapper'>
+    <>
       <Table columns={columns} dataSource={jobsData} pagination={{
         pageSize: 10,
         showSizeChanger: false,
@@ -125,10 +126,10 @@ function RoleTable() {
         size='small'
       >
       </Table>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
+      {/* <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
         <p>{roleDetails}</p>
-      </Card>
-    </div>
+      </Card> */}
+    </>
   )
 }
 export default RoleTable;
