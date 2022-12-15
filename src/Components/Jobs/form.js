@@ -32,32 +32,45 @@ function RoleForm(props) {
       requests: [
         {
           indexName: 'wenjobs',
-          // You can make typos, we handle it
           query: jobs.keyword,
           hitsPerPage: 50,
         },
       ],
     });
-    console.log('[Results]', results);
-
-
-
-
-    //* This is the old way of doing it, using firebase
-    // if (jobs.keyword) {
-    //   // query firebase to see if there are any jobs that match the keyword
-    //   const jobsRef = collection(db, "jobs");
-    //   const q = query(jobsRef, where("title", "==", jobs.keyword), orderBy("posted", "desc"));
-    //   const querySnapshot = await getDocs(q);
-    //   console.log(querySnapshot)
-    //   querySnapshot.forEach((doc) => {
-    //     console.log(`${doc.id} => ${doc.data()}`);
-    //   });
-    // }
+    // add results to redux store
+    dispatch(filterJobs(results[0].hits))
   }
 
-  const clearFilter = () => {
-    dispatch(filterJobs(''))
+  const clearFilter = async () => {
+    const { results } = await client.search({
+      requests: [
+        {
+          indexName: 'wenjobs',
+          query: '',
+          hitsPerPage: 50,
+        },
+      ],
+    });
+    // add results to redux store
+    dispatch(filterJobs(results[0].hits))
+  }
+
+  const getRemote = async (e) => {
+    if (e.target.checked) {
+      const { results } = await client.search({
+        requests: [
+          {
+            indexName: 'wenjobs',
+            query: `${jobs.keyword} remote`,
+            hitsPerPage: 50,
+          },
+        ],
+      });
+      // add results to redux store
+      console.log(results[0].hits)
+      dispatch(filterJobs(results[0].hits))
+
+    }
   }
 
   return (
@@ -75,9 +88,9 @@ function RoleForm(props) {
         <Form.Item label="General Keywords">
           <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Form.Item>
-        {/* <Form.Item label="Remote">
+        <Form.Item label="Remote">
           <Checkbox onChange={(e) => getRemote(e)} />
-        </Form.Item> */}
+        </Form.Item>
         <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
         <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
       </Form>

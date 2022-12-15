@@ -15,7 +15,7 @@ export const jobsSlice = createSlice({
         },
         filterJobs: (state, action) => {
             // set the filtered jobs in state
-            state.filteredJobs = state.jobs.filter(job => job.title.toLowerCase().includes(state.keyword.toLowerCase()));
+            state.filteredJobs = action.payload;
         },
         setKeyword: (state, action) => {
             state.keyword = action.payload;
