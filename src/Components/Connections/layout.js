@@ -1,10 +1,9 @@
 import React from 'react';
 import { Layout } from 'antd';
 import PeopleTable from './table';
-import PeopleForm from './form';
 const { Content } = Layout;
 
-function PeoplePageLayout() {
+function ConnectionsLayout() {
 
   return (
     <Layout>
@@ -19,8 +18,8 @@ function PeoplePageLayout() {
             }}
           >
             <div className='peopleContentWrapper'>
-            {/* <PeopleForm /> */}
-            <PeopleTable />
+              {/* <PeopleForm /> */}
+              <PeopleTable />
             </div>
           </Content>
         </Layout>
@@ -29,4 +28,4 @@ function PeoplePageLayout() {
   );
 }
 
-export default PeoplePageLayout
+export default ConnectionsLayout;

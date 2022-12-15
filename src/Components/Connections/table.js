@@ -1,37 +1,26 @@
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload, List, UploadProps, Form, Input } from 'antd';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc, getDoc, writeBatch, doc, updateDoc } from 'firebase/firestore';
-import React, { useState, useEffect } from 'react';
+import { Button, Upload, Form, Input } from 'antd';
+import { getDoc, doc, updateDoc } from 'firebase/firestore';
+import React, { useEffect } from 'react';
 import Papa from 'papaparse';
 import Column from 'antd/es/table/Column';
 import { useAuth0 } from "@auth0/auth0-react";
 import './style.css'
+import db from '../Firebase/FirebaseConfig';
+import { useSelector, useDispatch } from 'react-redux';
+import { setConnectionsData } from '../../Store/slices/connections';
+import { SearchOutlined } from '@ant-design/icons';
+
 
 const PeopleTable = () => {
 
   const { user, isAuthenticated } = useAuth0();
 
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-  };
 
-  const [connectionsData, setConnectionsData] = useState(null);
-  const [searchText, setSearchText] = useState(null);
+  let connectionsData = useSelector(state => state.connections.connections);
+  const dispatch = useDispatch();
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
 
   const handleFile = (info) => {
 
@@ -40,12 +29,13 @@ const PeopleTable = () => {
       header: true,
       complete: (result) => {
         console.log(result.data);
-        setConnectionsData(result.data)
-        console.log('papaarse connections ', connectionsData)
+        dispatch(setConnectionsData(result.data))
+        console.log('papa parse connections ', connectionsData)
       }
     });
+    console.log('papa parse connections ', connectionsData);
+    addConnectionsData();
   }
-  console.log('papaarse connections ', connectionsData);
 
   const addConnectionsData = async () => {
     console.log(user.email)
@@ -65,23 +55,30 @@ const PeopleTable = () => {
 
   const readConnectionsData = async () => {
 
-    // let connectionsArray = [];
 
     const docRef = doc(db, "users", user.email);
-    const docSnap = await getDoc(docRef);
+    let docSnap = await getDoc(docRef);
     let data;
+
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       data = docSnap.data().connections
     } else {
       // doc.data() will be undefined in this case
+      let docSnap = await getDoc(docRef);
+      data = docSnap.data().connections
       console.log("No such document!");
     }
 
     console.log(data)
-    setConnectionsData(data);
+    dispatch(setConnectionsData(data));
   }
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      readConnectionsData();
+    }
+  }, [isAuthenticated])
   return (
     <>
       <div className='peopleFormWrapper'>
@@ -92,7 +89,6 @@ const PeopleTable = () => {
         >
           <Form.Item label="Search by First Name">
             <Input.Search onSearch={(value) => {
-              setSearchText(value);
             }} />
           </Form.Item>
           <Form.Item label="Search by Last Name">
@@ -117,8 +113,6 @@ const PeopleTable = () => {
         <div className='uploadSectionWrapper'>
           <Upload customRequest={handleFile}>
             <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
-          <Button className='contentModifyButton' onClick={addConnectionsData}>Add Connections to Database</Button>
-          <Button className='contentModifyButton' onClick={readConnectionsData}>Get Connections from Database</Button>
           </Upload>
         </div>
       </div>
