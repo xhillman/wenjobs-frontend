@@ -124,6 +124,8 @@ function RoleTable() {
         })}
         rowSelection={handleRowSelection}
         size='small'
+        bordered
+        
       >
       </Table>
       {/* <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
