@@ -2,23 +2,9 @@ import { Table } from 'antd';
 import Column from 'antd/es/table/Column';
 import { useSelector } from 'react-redux';
 
-const columns = [
-  {
-    title: 'Company',
-    dataIndex: 'company',
-    key: 'company',
-  },
-  {
-    title: '# Connections',
-    dataIndex: 'numConnections',
-    key: 'numConnections',
-  }
-];
-
 const CompaniesTable = () => {
 
   let connectionsData = useSelector(state => state.connections.connections);
-  // console.log('connection data: ', connectionsData);
   let companyData = new Map();
   connectionsData.forEach(connection => {
     if (companyData.has(connection.Company)) {
@@ -35,8 +21,7 @@ const CompaniesTable = () => {
     } else {
       companyDataArray.push({ company: key, numConnections: value });
     }
-  });
-  console.log('company data: ', companyDataArray);
+  })
 
   return (
     <div className='connectionsTableWrapper'>
