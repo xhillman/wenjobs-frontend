@@ -17,10 +17,8 @@ const PeopleTable = () => {
 
   const { user, isAuthenticated } = useAuth0();
 
-
   let connectionsData = useSelector(state => state.connections.connections);
   const dispatch = useDispatch();
-
 
   const handleFile = (info) => {
 
@@ -55,7 +53,6 @@ const PeopleTable = () => {
 
   const readConnectionsData = async () => {
 
-
     const docRef = doc(db, "users", user.email);
     let docSnap = await getDoc(docRef);
     let data;
@@ -79,6 +76,7 @@ const PeopleTable = () => {
       readConnectionsData();
     }
   }, [isAuthenticated])
+  
   return (
     <>
       <div className='peopleFormWrapper'>
