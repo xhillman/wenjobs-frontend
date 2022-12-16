@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Form,
   Input,
-  Checkbox,
 } from 'antd';
 import { Button } from 'antd';
 
@@ -47,23 +46,23 @@ function RoleForm() {
 
   //* Fetch remote jobs from algolia
   //* Combines keyword with remote for more robust search
-  const getRemote = async (e) => {
-    if (e.target.checked) {
-      const { results } = await client.search({
-        requests: [
-          {
-            indexName: 'wenjobs',
-            query: `${jobs.keyword} remote`,
-            hitsPerPage: 50,
-          },
-        ],
-      });
-      // add results to redux store
-      console.log(results[0].hits)
-      dispatch(filterJobs(results[0].hits))
+  // const getRemote = async (e) => {
+  //   if (e.target.checked) {
+  //     const { results } = await client.search({
+  //       requests: [
+  //         {
+  //           indexName: 'wenjobs',
+  //           query: `${jobs.keyword} remote`,
+  //           hitsPerPage: 50,
+  //         },
+  //       ],
+  //     });
+  //     // add results to redux store
+  //     console.log(results[0].hits)
+  //     dispatch(filterJobs(results[0].hits))
 
-    }
-  }
+  //   }
+  // }
 
   return (
     <>
