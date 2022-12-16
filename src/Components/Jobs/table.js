@@ -15,11 +15,11 @@ const columns = [
     dataIndex: 'title',
     key: 'title',
   },
-  // {
-  //   title: 'Posted',
-  //   dataIndex: 'posted',
-  //   key: 'posted',
-  // },
+  {
+    title: 'Posted',
+    dataIndex: 'posted',
+    key: 'posted',
+  },
   {
     title: 'Company',
     dataIndex: 'company',
@@ -30,30 +30,72 @@ const columns = [
     dataIndex: 'location',
     key: 'location',
   },
-// {
-//   title: 'Tags',
-//   key: 'tags',
-//   dataIndex: 'tags',
-//   render: (_, { tags }) => (
-//     <>
-//       {tags.map((tag) => {
-//         return (
-//           <Space wrap>
-//             <Tag key={tag}>
-//               {tag.toUpperCase()}
-//             </Tag>
-//           </Space>
-//         );
-//       })}
-//     </>
-//   ),
-// },
-// {
-//   title: 'Apply Now!',
-//   dataIndex: 'URL',
-//   key: 'URL',
-//   render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
-// },
+  {
+    title: 'Salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    width: '10% '
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: (_, { tags }) => (
+      <>
+        {
+          
+          tags.map((tag) => {
+          let color;
+          switch (tag.length) {
+            case 2:
+              color = 'geekblue';
+              break;
+            case 3:
+              color = 'green';
+              break;
+            case 4:
+              color = 'blue';
+              break;
+            case 5:
+              color = 'purple';
+              break;
+            case 6:
+              color = 'orange';
+              break;
+            case 7:
+              color = 'magenta';
+              break;
+            case 8:
+              color = 'cyan';
+              break;
+            case 9:
+              color = 'volcano';
+              break;
+            case 10:
+              color = 'gold';
+              break;
+            default:
+              color = '';
+              break;
+          }
+
+          return (
+            <Space wrap>
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            </Space>
+          );
+        })}
+      </>
+    ),
+  },
+  // {
+  //   title: 'Apply Now!',
+  //   dataIndex: 'URL',
+  //   key: 'URL',
+  //   render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
+  // },
 ];
 
 function RoleTable() {
@@ -99,7 +141,6 @@ function RoleTable() {
     fetchJobs();
   }, []);
 
-  const [roleDetails, setRoleDetails] = useState(null)
   const handleRowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -117,6 +158,7 @@ function RoleTable() {
       <Table columns={columns} dataSource={jobsData} pagination={{
         pageSize: 10,
         showSizeChanger: false,
+        color: 'white'
       }}
         onChange={fetchMoreJobs}
         onRow={record => ({
@@ -126,6 +168,7 @@ function RoleTable() {
         size='small'
         bordered
         
+
       >
       </Table>
     </>

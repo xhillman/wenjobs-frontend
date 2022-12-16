@@ -1,21 +1,11 @@
-/* body {
-    background-image: url('./5394549.svg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-} */
-
-/* body {
-    background-image: url('./gradienta-rKv4HduvzIE-unsplash.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-} */
-
 body {
-    background-image: url('./magicpattern-bevXKKL7E9g-unsplash.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    
+  background: rgb(127, 176, 208);
+  background: linear-gradient(
+    345deg,
+    rgba(127, 176, 208, 1) 0%,
+    rgba(204, 223, 255, 1) 51%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  height: 100vh;
+
 }
