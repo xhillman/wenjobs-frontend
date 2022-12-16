@@ -1,8 +1,8 @@
 import { Table } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload, Form, Input } from 'antd';
-import { getDoc, doc, updateDoc } from 'firebase/firestore';
-import React, { useEffect } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import React from 'react';
 import Papa from 'papaparse';
 import Column from 'antd/es/table/Column';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -10,17 +10,13 @@ import './style.css'
 import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import { setConnectionsData } from '../../Store/slices/connections';
-import { SearchOutlined } from '@ant-design/icons';
-
 
 const PeopleTable = () => {
 
-  const { user, isAuthenticated } = useAuth0();
-
+  const { user } = useAuth0();
 
   let connectionsData = useSelector(state => state.connections.connections);
   const dispatch = useDispatch();
-
 
   const handleFile = (info) => {
 
@@ -53,32 +49,6 @@ const PeopleTable = () => {
     }
   }
 
-  const readConnectionsData = async () => {
-
-
-    const docRef = doc(db, "users", user.email);
-    let docSnap = await getDoc(docRef);
-    let data;
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      data = docSnap.data().connections
-    } else {
-      // doc.data() will be undefined in this case
-      let docSnap = await getDoc(docRef);
-      data = docSnap.data().connections
-      console.log("No such document!");
-    }
-
-    console.log(data)
-    dispatch(setConnectionsData(data));
-  }
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      readConnectionsData();
-    }
-  }, [isAuthenticated])
   return (
     <>
       <div className='peopleFormWrapper'>
