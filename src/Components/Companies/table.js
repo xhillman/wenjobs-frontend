@@ -128,6 +128,8 @@ const CompaniesTable = () => {
       dataIndex: 'numConnections',
       key: 'numConnections',
       width: '10%',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.numConnections - b.numConnections,
     }
   ];
 
@@ -152,8 +154,8 @@ const CompaniesTable = () => {
 
   return (
     <div className='connectionsTableWrapper'>
-      <Table pagination={{ pageSize: '10' }}
-        defaultPageSize={10}
+      <Table 
+        pafeSize={10}
         columns={columns}
         dataSource={companyDataArray}>
         <Column title='Company' dataIndex='company' key={Math.random()} />
