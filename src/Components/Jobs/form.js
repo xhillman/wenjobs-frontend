@@ -11,10 +11,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { filterJobs } from '../../Store/slices/jobs';
 import { setKeyword } from '../../Store/slices/jobs';
 import { algoliasearch } from 'algoliasearch';
+const { Search } = Input;
 
 
 
-function RoleForm(props) {
+function RoleForm() {
 
   //* Instantiate the Algolia client
   const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_API_KEY);
@@ -65,19 +66,34 @@ function RoleForm(props) {
   }
 
   return (
-    <Form style={{
-      padding: '1rem',
-      position: 'relative',
-    }}>
-      <Form.Item>
-        <Input placeholder='Keywords' onChange={(e) => dispatch(setKeyword(e.target.value))} />
-      </Form.Item>
-      <Form.Item label="Remote">
-        <Checkbox onChange={(e) => getRemote(e)} />
-      </Form.Item>
-      <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
-      <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
-    </Form>
+    <>
+      <Form style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+        <Form.Item
+          style={{
+            display: 'flex',
+            flexGrow: 1,
+
+          }}>
+          <Search
+            style={{
+              width: '500px',
+              flexGrow: 1,
+            }}
+            size='large'
+            enterButton='Search'
+            onSearch={applyFilter}
+            placeholder={`Try "Remote" or "React" or "Python", or all 3!`}
+            onChange={(e) => dispatch(setKeyword(e.target.value))} />
+        </Form.Item>
+        {/* <Form.Item label="Remote">
+          <Checkbox onChange={(e) => getRemote(e)} />
+        </Form.Item> */}
+      </Form>
+      <Button size='large' style={{ backgroundColor: 'gray', color: 'white', marginLeft: '1rem' }} type='primary' onClick={clearFilter}>Reset</Button>
+    </>
 
   );
 };

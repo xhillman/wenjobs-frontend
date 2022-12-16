@@ -5,7 +5,7 @@ import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
 import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
-import { setJobs } from '../../Store/slices/jobs';
+import { setJobs, setSelectedJob } from '../../Store/slices/jobs';
 
 import './style.css'
 
@@ -15,11 +15,11 @@ const columns = [
     dataIndex: 'title',
     key: 'title',
   },
-  {
-    title: 'Posted',
-    dataIndex: 'posted',
-    key: 'posted',
-  },
+  // {
+  //   title: 'Posted',
+  //   dataIndex: 'posted',
+  //   key: 'posted',
+  // },
   {
     title: 'Company',
     dataIndex: 'company',
@@ -120,7 +120,7 @@ function RoleTable() {
       }}
         onChange={fetchMoreJobs}
         onRow={record => ({
-          onClick: (e) => setRoleDetails(`${record.details}`)
+          onClick: (e) => dispatch(setSelectedJob(record)),
         })}
         rowSelection={handleRowSelection}
         size='small'
@@ -128,9 +128,6 @@ function RoleTable() {
         
       >
       </Table>
-      {/* <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
-        <p>{roleDetails}</p>
-      </Card> */}
     </>
   )
 }
