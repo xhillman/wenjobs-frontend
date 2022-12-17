@@ -7,6 +7,29 @@ body {
     rgba(245, 245, 245, 1) 100%
   );
   background-attachment: fixed;
-  height: 100vh;
+  /* height: 100vh; */
 
+}
+
+.sider {
+  margin: 2rem 2rem 5.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  max-height: 62vh;
+}
+
+.content {
+  margin: 2rem 1rem;
+  overflow: auto;
+}
+
+.layout {
+  border-radius: 20px;
+  background-color: rgba(184, 154, 169, 0.19);
+  height: 75vh;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
 }

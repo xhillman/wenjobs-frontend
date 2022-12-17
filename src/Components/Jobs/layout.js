@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import RoleTable from './table';
 import RoleForm from './form';
 import JobCard from './jobCard';
-const { Content, Sider, Header } = Layout;
+const { Content, Sider } = Layout;
 
 function JobsLayout() {
 
@@ -11,30 +11,17 @@ function JobsLayout() {
   return (
     <div className='background'>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-
-        }}>
+      <div className='search'>
         <RoleForm />
       </div>
 
-      <Layout style={{ borderRadius: '20px ', backgroundColor: 'rgba(184, 154, 169, 0.19)', height: '80vh'}}>
+      <Layout className='layout'>
 
-        <Content style={{
-          margin: '2rem 1rem',
-          overflow: 'auto'
-        }}>
+        <Content className='content'>
           <RoleTable />
         </Content>
-        <Sider width='35rem' theme='light'
-          style={{
-            margin: '2rem 2rem 5.5rem 1rem',
-            borderRadius: '8px',
-            boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
-            maxHeight: '62vh',
-          }}>
+        <Sider className='sider' width='35rem' theme='light'
+        >
           <JobCard />
         </Sider>
       </Layout>
