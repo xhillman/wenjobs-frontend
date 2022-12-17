@@ -167,8 +167,6 @@ function RoleTable() {
         rowSelection={handleRowSelection}
         size='small'
         bordered
-        
-
       >
       </Table>
     </>

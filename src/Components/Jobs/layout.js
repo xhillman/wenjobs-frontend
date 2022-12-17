@@ -20,14 +20,15 @@ function JobsLayout() {
         <RoleForm />
       </div>
 
-      <Layout style={{ borderRadius: '20px ', backgroundColor: 'rgba(184, 154, 169, 0.19)' }}>
+      <Layout style={{ borderRadius: '20px ', backgroundColor: 'rgba(184, 154, 169, 0.19)', height: '80vh'}}>
 
         <Content style={{
           margin: '2rem 1rem',
+          overflow: 'auto'
         }}>
           <RoleTable />
         </Content>
-        <Sider width='40rem' theme='light'
+        <Sider width='35rem' theme='light'
           style={{
             margin: '2rem 2rem 5.5rem 1rem',
             borderRadius: '8px',

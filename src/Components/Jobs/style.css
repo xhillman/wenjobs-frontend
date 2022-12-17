@@ -6,6 +6,7 @@ body {
     rgba(204, 223, 255, 1) 51%,
     rgba(245, 245, 245, 1) 100%
   );
+  background-attachment: fixed;
   height: 100vh;
 
 }
