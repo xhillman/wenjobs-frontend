@@ -1,6 +1,7 @@
 import { Typography, Image, Row, Col } from 'antd';
 
 import './LandingPage.css';
+import hero from './hero.svg'
 
 const { Title, Text } = Typography;
 
@@ -19,7 +20,7 @@ function LandingPage() {
           </Col>
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Image
-              src='https://img.freepik.com/free-vector/successful-partnership-negotiation-partners-handshaking_335657-2453.jpg?w=740&t=st=1669081435~exp=1669082035~hmac=8059dd027dd3c834df7a452354f321fc5246ad57438168f79ce47c195da8079c'
+              src={hero}
               preview={false}
             />
           </Col>
