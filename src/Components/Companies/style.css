@@ -1,0 +1,33 @@
+body {
+  background: rgb(127, 176, 208);
+  background: linear-gradient(
+    345deg,
+    rgba(127, 176, 208, 1) 0%,
+    rgba(204, 223, 255, 1) 51%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  background-attachment: fixed;
+  /* height: 100vh; */
+} 
+
+.content {
+  margin: 2rem 1rem;
+}
+
+.companiesLayout {
+  border-radius: 20px;
+  background-color: rgba(184, 154, 169, 0.19);
+  height: 80vh;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+}
+
+.formHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.5rem;
+}
