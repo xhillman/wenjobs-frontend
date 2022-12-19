@@ -20,8 +20,6 @@ const UploadConnections = () => {
 
     const { user, isAuthenticated } = useAuth0();
 
-    const [uploadCompleted, setUploadCompleted] = useState('');
-
     const handleFile = (info) => {
 
         if (isAuthenticated) {
@@ -38,8 +36,7 @@ const UploadConnections = () => {
                 });
                 console.log('papa parse connections ', connectionsData);
                 addConnectionsData();
-                setUploadCompleted('done');
-                info.status='done';
+                info.onSuccess(info.file);
             } catch (error) {
                 console.error(error);
             };
@@ -79,7 +76,7 @@ const UploadConnections = () => {
                 />
             </Space> */}
 
-            <Upload  customRequest={handleFile}>
+            <Upload customRequest={handleFile}>
                 <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
             </Upload>
         </>
