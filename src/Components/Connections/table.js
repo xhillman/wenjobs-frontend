@@ -81,24 +81,7 @@ const PeopleTable = () => {
   }, [isAuthenticated])
   return (
     <>
-      <div className='peopleFormWrapper'>
-        <Form
-          labelCol={{ span: 15 }}
-          wrapperCol={{ span: 20 }}
-          layout="vertical"
-        >
-          <Form.Item label="Search by First Name">
-            <Input.Search onSearch={(value) => {
-            }} />
-          </Form.Item>
-          <Form.Item label="Search by Last Name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Search by Company">
-            <Input />
-          </Form.Item>
-        </Form>
-      </div >
+    
       <div className='connectionsTableWrapper'>
         <Table pagination={{ pageSize: '5' }}
           defaultPageSize={5}
