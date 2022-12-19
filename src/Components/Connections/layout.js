@@ -1,6 +1,7 @@
 import React from 'react';
 import PeopleTable from './table';
 import PeopleForm from './form';
+import UploadConnections from './uploadConnections';
 import './style.css';
 
 import { Layout } from 'antd';
@@ -16,6 +17,7 @@ function ConnectionsLayout() {
           <h4>Search</h4>
         </div>
         <PeopleForm />
+        <UploadConnections />
       </Sider>
 
       <Content className='content'>

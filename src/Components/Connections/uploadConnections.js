@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setConnectionsData } from '../../Store/slices/connections';
 import { doc, updateDoc } from 'firebase/firestore';
 import db from "../Firebase/FirebaseConfig";
-import useAuth0 from "../../Auth0/useAuth0";
+import { useAuth0 } from "@auth0/auth0-react";
 import './style.css'
 
 
@@ -63,7 +63,7 @@ const UploadConnections = () => {
 
     return (
         <>
-            <Space
+            {/* <Space
                 direction="vertical"
                 style={{
                     width: '100%',
@@ -75,7 +75,7 @@ const UploadConnections = () => {
                     type="error"
                     closable
                 />
-            </Space>
+            </Space> */}
 
             <Upload customRequest={handleFile}>
                 <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
