@@ -1,6 +1,6 @@
 import { Table } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload, Form, Input } from 'antd';
+import { Button, Upload } from 'antd';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import Papa from 'papaparse';
@@ -10,7 +10,6 @@ import './style.css'
 import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import { setConnectionsData } from '../../Store/slices/connections';
-import { SearchOutlined } from '@ant-design/icons';
 
 
 const PeopleTable = () => {
@@ -81,24 +80,22 @@ const PeopleTable = () => {
   }, [isAuthenticated])
   return (
     <>
-    
-      <div className='connectionsTableWrapper'>
-        <Table pagination={{ pageSize: '5' }}
-          defaultPageSize={5}
-          dataSource={connectionsData}>
-          <Column title='First Name' dataIndex='First Name' key={Math.random()} />
-          <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
-          <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
-          <Column title='Company' dataIndex='Company' key={Math.random()} />
-          <Column title='Position' dataIndex='Position' key={Math.random()} />
-          <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
-        </Table>
-        <div className='uploadSectionWrapper'>
-          <Upload customRequest={handleFile}>
-            <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
-          </Upload>
-        </div>
-      </div>
+
+      <Table pagination={{ pageSize: '5' }}
+        defaultPageSize={5}
+        dataSource={connectionsData}>
+        <Column title='First Name' dataIndex='First Name' key={Math.random()} />
+        <Column title='Last Name' dataIndex='Last Name' key={Math.random()} />
+        <Column title='Email Address' dataIndex='Email Address' key={Math.random()} />
+        <Column title='Company' dataIndex='Company' key={Math.random()} />
+        <Column title='Position' dataIndex='Position' key={Math.random()} />
+        <Column title='Connected On' dataIndex='Connected On' key={Math.random()} />
+      </Table>
+
+      <Upload customRequest={handleFile}>
+        <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
+      </Upload>
+
     </>
   );
 }
