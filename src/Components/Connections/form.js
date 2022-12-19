@@ -23,6 +23,8 @@ function PeopleForm() {
                 <Input.Search placeholder='Company' onSearch={() => {}}/>
             </Form.Item>
         </Form>
+
+        
     );
 };
 export default PeopleForm;

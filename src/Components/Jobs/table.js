@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Space, Tag, Card } from 'antd';
-import Column from 'antd/es/table/Column';
+import { Table, Space, Tag } from 'antd';
 import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
 import db from '../Firebase/FirebaseConfig';
@@ -43,50 +42,50 @@ const columns = [
     render: (_, { tags }) => (
       <>
         {
-          
-          tags.map((tag) => {
-          let color;
-          switch (tag.length) {
-            case 2:
-              color = 'geekblue';
-              break;
-            case 3:
-              color = 'green';
-              break;
-            case 4:
-              color = 'blue';
-              break;
-            case 5:
-              color = 'purple';
-              break;
-            case 6:
-              color = 'orange';
-              break;
-            case 7:
-              color = 'magenta';
-              break;
-            case 8:
-              color = 'cyan';
-              break;
-            case 9:
-              color = 'volcano';
-              break;
-            case 10:
-              color = 'gold';
-              break;
-            default:
-              color = '';
-              break;
-          }
 
-          return (
-            <Space wrap>
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            </Space>
-          );
-        })}
+          tags.map((tag) => {
+            let color;
+            switch (tag.length) {
+              case 2:
+                color = 'geekblue';
+                break;
+              case 3:
+                color = 'green';
+                break;
+              case 4:
+                color = 'blue';
+                break;
+              case 5:
+                color = 'purple';
+                break;
+              case 6:
+                color = 'orange';
+                break;
+              case 7:
+                color = 'magenta';
+                break;
+              case 8:
+                color = 'cyan';
+                break;
+              case 9:
+                color = 'volcano';
+                break;
+              case 10:
+                color = 'gold';
+                break;
+              default:
+                color = '';
+                break;
+            }
+
+            return (
+              <Space wrap>
+                <Tag color={color} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              </Space>
+            );
+          })}
       </>
     ),
   },
