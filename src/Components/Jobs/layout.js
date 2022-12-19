@@ -20,7 +20,7 @@ function JobsLayout() {
         <Content className='content'>
           <RoleTable />
         </Content>
-        <Sider className='sider' width='35rem' theme='light'
+        <Sider className='sider' width='35vw' theme='light'
         >
           <JobCard />
         </Sider>

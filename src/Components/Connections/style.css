@@ -8,10 +8,10 @@ body {
   );
   background-attachment: fixed;
   /* height: 100vh; */
+} 
 
-}
 
-.sider {
+ .connectionSider {
   display: flex;
   justify-content: center;
   align-items: center;

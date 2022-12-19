@@ -12,7 +12,7 @@ function ConnectionsLayout() {
   return (
     <Layout className='layout'>
 
-      <Sider className='sider' width='15rem' theme='light'>
+      <Sider className='connectionSider' width='15rem' theme='light'>
         <div className='formHeader'>
           <h4>Search</h4>
         </div>

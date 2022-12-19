@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 // import { Alert, Space } from 'antd';
@@ -20,7 +20,7 @@ const UploadConnections = () => {
 
     const { user, isAuthenticated } = useAuth0();
 
-
+    const [uploadCompleted, setUploadCompleted] = useState('');
 
     const handleFile = (info) => {
 
@@ -38,6 +38,8 @@ const UploadConnections = () => {
                 });
                 console.log('papa parse connections ', connectionsData);
                 addConnectionsData();
+                setUploadCompleted('done');
+                info.status='done';
             } catch (error) {
                 console.error(error);
             };
@@ -77,7 +79,7 @@ const UploadConnections = () => {
                 />
             </Space> */}
 
-            <Upload customRequest={handleFile}>
+            <Upload  customRequest={handleFile}>
                 <Button className='uploadCSVButton' icon={<UploadOutlined />}>Upload CSV</Button>
             </Upload>
         </>
