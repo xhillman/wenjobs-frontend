@@ -8,11 +8,9 @@ import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import { setConnectionsData } from '../../Store/slices/connections';
 
-
 const PeopleTable = () => {
 
   const { user, isAuthenticated } = useAuth0();
-
 
   let connectionsData = useSelector(state => state.connections.connections);
   const dispatch = useDispatch();

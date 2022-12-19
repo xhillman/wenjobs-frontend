@@ -7,6 +7,7 @@ import Home from './Components/Home';
 // import Companies from './Components/Companies/layout';
 import Jobs from './Components/Jobs/layout';
 import Connections from './Components/Connections/layout';
+import Companies from './Components/Companies/layout';
 import ErrorPage from './Components/Jobs/error-page';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -29,7 +30,7 @@ root.render(
           <Routes>
 
             <Route default path="/" element={<Home />} errorElement={<ErrorPage />} />
-            {/* <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} /> */}
+            <Route default path="/Companies" element={<Companies />} errorElement={<ErrorPage />} />
             <Route default path="/Jobs" element={<Jobs />} errorElement={<ErrorPage />} />
             <Route default path="/Connections" element={<Connections />} errorElement={<ErrorPage />} />
 
