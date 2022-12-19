@@ -12,10 +12,14 @@ body {
 }
 
 .sider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 2rem 2rem 5.5rem 1rem;
+  padding: 1rem .5rem 1rem 2rem;
   border-radius: 8px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  max-height: 62vh;
+  max-height: 34vh;
 }
 
 .content {
@@ -32,4 +36,11 @@ body {
 .search {
   display: flex;
   justify-content: center;
+}
+
+.formHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.5rem;
 }

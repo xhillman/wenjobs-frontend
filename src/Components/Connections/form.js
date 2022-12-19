@@ -9,19 +9,18 @@ import './style.css'
 function PeopleForm() {
     return (
         <Form
-            labelCol={{ span: 15 }}
-            wrapperCol={{ span: 20 }}
-            layout="vertical"
+        labelCol={{ span: 15 }}
+        wrapperCol={{ span: 20 }}
+        layout="vertical"
         >
-            <Form.Item label="Search by First Name">
-                <Input.Search onSearch={(value) => {
-                }} />
+            <Form.Item>
+                <Input.Search placeholder='First Name' onSearch={(value) => {}} />
             </Form.Item>
-            <Form.Item label="Search by Last Name">
-                <Input />
+            <Form.Item>
+                <Input.Search placeholder='Last Name' onSearch={(value) => {}}/>
             </Form.Item>
-            <Form.Item label="Search by Company">
-                <Input />
+            <Form.Item>
+                <Input.Search placeholder='Company' onSearch={() => {}}/>
             </Form.Item>
         </Form>
     );
