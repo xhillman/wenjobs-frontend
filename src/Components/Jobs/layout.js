@@ -1,63 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 import RoleTable from './table';
 import RoleForm from './form';
-const { Content } = Layout;
+import JobCard from './jobCard';
+const { Content, Sider } = Layout;
 
 function JobsLayout() {
 
-  const [keyword, setKeyword] = useState();
-  const [isRemote, setIsRemote] = useState(false);
-  const [filterParams, setFilterParams] = useState({});
-  const [needReset, setNeedReset] = useState(false);
-
-  const getKeyword = (e) => {
-    setKeyword(e);
-  }
-
-  const getRemote = (e) => {
-    setIsRemote(e.target.checked);
-  }
-
-  const applyFilter = () => {
-    if (keyword) {
-      setFilterParams({...filterParams, 
-        keyword: keyword
-      })
-    }
-    if (isRemote) {
-      setFilterParams({...filterParams, 
-        remote: isRemote
-      })
-    }
-    setNeedReset(false);
-  }
-
-  const clearFilter = () => {
-    setFilterParams({});
-    setNeedReset(true);
-  }
 
   return (
-    <Layout>
-      <Layout>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <div className='roleContentWrapper'>
-            <RoleForm getKeyword={getKeyword} applyFilter={applyFilter} clearFilter={clearFilter} getRemote={getRemote}/>
-            <RoleTable filterParams={filterParams} needReset={needReset}/>
-            </div>
-          </Content>
-        </Layout>
+    <div className='background'>
+
+      <div className='search'>
+        <RoleForm />
+      </div>
+
+      <Layout className='layout'>
+
+        <Content className='content'>
+          <RoleTable />
+        </Content>
+        <Sider className='sider' width='35vw' theme='light'
+        >
+          <JobCard />
+        </Sider>
       </Layout>
-    </Layout>
+    </div>
   );
 }
 

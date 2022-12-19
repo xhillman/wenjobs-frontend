@@ -7,6 +7,7 @@ export const jobsSlice = createSlice({
         jobs: [],
         filteredJobs: [],
         keyword: "",
+        selectedJob: {},
     },
     reducers: {
         setJobs: (state, action) => {
@@ -20,9 +21,13 @@ export const jobsSlice = createSlice({
         setKeyword: (state, action) => {
             state.keyword = action.payload;
         },
+        setSelectedJob: (state, action) => {
+            console.log(action.payload)
+            state.selectedJob = { ...action.payload };
+        }
     },
 });
 
-export const { setJobs, filterJobs, setKeyword } = jobsSlice.actions;
+export const { setJobs, filterJobs, setKeyword, setSelectedJob } = jobsSlice.actions;
 
 export default jobsSlice.reducer;

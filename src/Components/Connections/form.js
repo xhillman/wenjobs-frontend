@@ -1,34 +1,30 @@
-// import React from 'react';
-// import {
-//   Form,
-//   Input
-// } from 'antd';
+import React from 'react';
+import {
+    Form,
+    Input
+} from 'antd';
 
-// import './style.css'
+import './style.css'
 
-// function PeopleForm() {
-//   return (
-//     <div className='formWrapper'>
-//       <Form
-//         labelCol={{
-//           span: 15,
-//         }}
-//         wrapperCol={{
-//           span: 15,
-//         }}
-//         layout="vertical"
-//       >
-//         <Form.Item label="Search by First Name">
-//           <Input.Search />
-//         </Form.Item>
-//         <Form.Item label="Search by Last Name">
-//           <Input />
-//         </Form.Item>
-//         <Form.Item label="Search by Company">
-//           <Input />
-//         </Form.Item>
-//       </Form>
-//     </div>
-//   );
-// };
-// export default PeopleForm;
+function PeopleForm() {
+    return (
+        <Form
+        labelCol={{ span: 15 }}
+        wrapperCol={{ span: 20 }}
+        layout="vertical"
+        >
+            <Form.Item>
+                <Input.Search placeholder='First Name' onSearch={(value) => {}} />
+            </Form.Item>
+            <Form.Item>
+                <Input.Search placeholder='Last Name' onSearch={(value) => {}}/>
+            </Form.Item>
+            <Form.Item>
+                <Input.Search placeholder='Company' onSearch={() => {}}/>
+            </Form.Item>
+        </Form>
+
+        
+    );
+};
+export default PeopleForm;

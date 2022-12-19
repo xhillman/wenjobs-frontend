@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Form,
   Input,
-  Checkbox,
 } from 'antd';
 import { Button } from 'antd';
 
@@ -10,13 +9,12 @@ import './style.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { filterJobs } from '../../Store/slices/jobs';
 import { setKeyword } from '../../Store/slices/jobs';
-import db from '../Firebase/FirebaseConfig';
-import { collection, query, orderBy, where, getDocs } from "firebase/firestore";
 import { algoliasearch } from 'algoliasearch';
+const { Search } = Input;
 
 
 
-function RoleForm(props) {
+function RoleForm() {
 
   //* Instantiate the Algolia client
   const client = algoliasearch(process.env.REACT_APP_ALGOLIA_ID, process.env.REACT_APP_ALGOLIA_API_KEY);
@@ -48,46 +46,54 @@ function RoleForm(props) {
 
   //* Fetch remote jobs from algolia
   //* Combines keyword with remote for more robust search
-  const getRemote = async (e) => {
-    if (e.target.checked) {
-      const { results } = await client.search({
-        requests: [
-          {
-            indexName: 'wenjobs',
-            query: `${jobs.keyword} remote`,
-            hitsPerPage: 50,
-          },
-        ],
-      });
-      // add results to redux store
-      console.log(results[0].hits)
-      dispatch(filterJobs(results[0].hits))
+  // const getRemote = async (e) => {
+  //   if (e.target.checked) {
+  //     const { results } = await client.search({
+  //       requests: [
+  //         {
+  //           indexName: 'wenjobs',
+  //           query: `${jobs.keyword} remote`,
+  //           hitsPerPage: 50,
+  //         },
+  //       ],
+  //     });
+  //     // add results to redux store
+  //     console.log(results[0].hits)
+  //     dispatch(filterJobs(results[0].hits))
 
-    }
-  }
+  //   }
+  // }
 
   return (
-    <div className='roleFormWrapper'>
+    <>
+      <Form style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+        <Form.Item
+          style={{
+            display: 'flex',
+            flexGrow: 1,
 
-      <Form
-        labelCol={{
-          span: 15,
-        }}
-        wrapperCol={{
-          span: 20,
-        }}
-        layout="vertical"
-      >
-        <Form.Item label="General Keywords">
-          <Input onChange={(e) => dispatch(setKeyword(e.target.value))} />
+          }}>
+          <Search
+            style={{
+              width: '500px',
+              flexGrow: 1,
+            }}
+            size='large'
+            enterButton='Search'
+            onSearch={applyFilter}
+            placeholder={`Try "Remote" or "React" or "Python", or all 3!`}
+            onChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Form.Item>
-        <Form.Item label="Remote">
+        {/* <Form.Item label="Remote">
           <Checkbox onChange={(e) => getRemote(e)} />
-        </Form.Item>
-        <Button className='roleSearchButton' onClick={applyFilter}>Apply</Button>
-        <Button className='roleSearchButton' onClick={clearFilter}>Clear</Button>
+        </Form.Item> */}
       </Form>
-    </div>
+      <Button size='large' style={{ backgroundColor: 'gray', color: 'white', marginLeft: '1rem' }} type='primary' onClick={clearFilter}>Reset</Button>
+    </>
+
   );
 };
 export default RoleForm;

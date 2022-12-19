@@ -1,30 +1,56 @@
 import React from 'react';
-import { Layout } from 'antd';
 import PeopleTable from './table';
-const { Content } = Layout;
+import PeopleForm from './form';
+import UploadConnections from './uploadConnections';
+import { useSelector } from 'react-redux';
+import './style.css';
+
+import { Alert, Space } from 'antd';
+import { Layout } from 'antd';
+const { Content, Sider } = Layout;
 
 function ConnectionsLayout() {
 
+  //  use redux state to get message
+  const message = useSelector(state => state.connections.message);
+
   return (
-    <Layout>
-      <Layout>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <div className='peopleContentWrapper'>
-              {/* <PeopleForm /> */}
-              <PeopleTable />
-            </div>
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
+    <>
+      {message  !== '' && ( // if message is truthy, render the alert
+
+        <Space
+          direction="vertical"
+          style={{
+            width: '100%',
+          }}
+        >
+          <Alert
+            message="Error Message"
+            description={message}
+            type="error"
+            closable
+          />
+        </Space>
+      )}
+
+      <Layout className='layout'>
+
+        <Sider className='connectionSider' width='15rem' theme='light'>
+          <div className='formHeader'>
+            <h4>Search</h4>
+          </div>
+          <PeopleForm />
+          <UploadConnections />
+        </Sider>
+
+        <Content className='content'>
+          <PeopleTable />
+        </Content>
+
+      </Layout >
+    </>
+
+
   );
 }
 

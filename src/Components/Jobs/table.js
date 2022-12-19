@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Space, Tag, Card } from 'antd';
-import Column from 'antd/es/table/Column';
+import { Table, Space, Tag } from 'antd';
 import { limit, orderBy, query } from 'firebase/firestore';
 import { collection, getDocs, startAfter } from 'firebase/firestore';
 import db from '../Firebase/FirebaseConfig';
 import { useSelector, useDispatch } from 'react-redux';
-import { setJobs } from '../../Store/slices/jobs';
+import { setJobs, setSelectedJob } from '../../Store/slices/jobs';
 
 import './style.css'
 
@@ -26,9 +25,15 @@ const columns = [
     key: 'company',
   },
   {
-    title: 'location',
+    title: 'Location',
     dataIndex: 'location',
     key: 'location',
+  },
+  {
+    title: 'Salary',
+    dataIndex: 'salary',
+    key: 'salary',
+    width: '10% '
   },
   {
     title: 'Tags',
@@ -36,31 +41,67 @@ const columns = [
     dataIndex: 'tags',
     render: (_, { tags }) => (
       <>
-        {tags.map((tag) => {
-          return (
-            <Space wrap>
-              <Tag key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            </Space>
-          );
-        })}
+        {
+
+          tags.map((tag) => {
+            let color;
+            switch (tag.length) {
+              case 2:
+                color = 'geekblue';
+                break;
+              case 3:
+                color = 'green';
+                break;
+              case 4:
+                color = 'blue';
+                break;
+              case 5:
+                color = 'purple';
+                break;
+              case 6:
+                color = 'orange';
+                break;
+              case 7:
+                color = 'magenta';
+                break;
+              case 8:
+                color = 'cyan';
+                break;
+              case 9:
+                color = 'volcano';
+                break;
+              case 10:
+                color = 'gold';
+                break;
+              default:
+                color = '';
+                break;
+            }
+
+            return (
+              <Space wrap>
+                <Tag color={color} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              </Space>
+            );
+          })}
       </>
     ),
   },
-  {
-    title: 'Apply Now!',
-    dataIndex: 'URL',
-    key: 'URL',
-    render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
-  },
+  // {
+  //   title: 'Apply Now!',
+  //   dataIndex: 'URL',
+  //   key: 'URL',
+  //   render: (link) => <Button type="primary" href={link} target='_blank'>Apply!</Button>
+  // },
 ];
 
 function RoleTable() {
 
   const jobs = useSelector(state => state.jobs);
   const dispatch = useDispatch();
-  
+
   const [lastVisible, setLastVisible] = useState(null);
 
   // declaring variables from redux state
@@ -74,7 +115,7 @@ function RoleTable() {
     // store the first 30 jobs in state
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-    
+
 
     dispatch(setJobs(jobsQuery));
     setLastVisible(lastQueryItem);
@@ -97,9 +138,9 @@ function RoleTable() {
   // fetch the first 30 jobs on page load
   useEffect(() => {
     fetchJobs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [roleDetails, setRoleDetails] = useState(null)
   const handleRowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -111,24 +152,24 @@ function RoleTable() {
       console.log(selected, selectedRows, changeRows);
     },
   };
+
   return (
-    <div className='roleTableWrapper'>
+    <>
       <Table columns={columns} dataSource={jobsData} pagination={{
         pageSize: 10,
         showSizeChanger: false,
+        color: 'white'
       }}
         onChange={fetchMoreJobs}
         onRow={record => ({
-          onClick: (e) => setRoleDetails(`${record.details}`)
+          onClick: (e) => dispatch(setSelectedJob(record)),
         })}
         rowSelection={handleRowSelection}
         size='small'
+        bordered
       >
       </Table>
-      <Card className='roleDetailCard' title="Role Details" bordered={false} bodyStyle={{ overflowY: 'auto', maxHeight: 300 }}>
-        <p>{roleDetails}</p>
-      </Card>
-    </div>
+    </>
   )
 }
 export default RoleTable;

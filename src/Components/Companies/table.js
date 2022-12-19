@@ -103,7 +103,7 @@ const CompaniesTable = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: '#ffc069',
+            // backgroundColor: '#ffc069',
             padding: 0,
           }}
           searchWords={[searchText]}
@@ -153,15 +153,13 @@ const CompaniesTable = () => {
   })
 
   return (
-    <div className='connectionsTableWrapper'>
       <Table 
-        pafeSize={10}
+        pageSize={10}
         columns={columns}
         dataSource={companyDataArray}>
         <Column title='Company' dataIndex='company' key={Math.random()} />
         <Column title='# Connections' dataIndex='numConnections' key={Math.random()} />
       </Table>
-    </div>
   )
 }
 
