@@ -138,6 +138,7 @@ function RoleTable() {
   // fetch the first 30 jobs on page load
   useEffect(() => {
     fetchJobs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRowSelection = {

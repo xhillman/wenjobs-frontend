@@ -1,7 +1,7 @@
 import React from "react";
 import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Alert, Space } from 'antd';
+// import { Alert, Space } from 'antd';
 import Papa from 'papaparse';
 import { useDispatch, useSelector } from 'react-redux';
 import { setConnectionsData } from '../../Store/slices/connections';

@@ -42,6 +42,7 @@ const PeopleTable = () => {
     if (isAuthenticated) {
       readConnectionsData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
   return (
