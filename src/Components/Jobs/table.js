@@ -26,8 +26,8 @@ const columns = [
   },
   {
     title: '# of Connections',
-    dataIndex: 'connections',
-    key: 'connections',
+    dataIndex: 'connectionsData',
+    key: 'connectionData',
   },
   {
     title: 'Location',
@@ -122,6 +122,7 @@ function RoleTable() {
       companyData.set(connection.Company, 1);
     }
   })
+
   let companyDataArray = [];
   companyData.forEach((value, key) => {
     if (key === '') {
@@ -132,6 +133,8 @@ function RoleTable() {
   })
 
   const fetchJobs = async () => {
+    console.log(companyData)
+    console.log(companyDataArray)
     // get the first 30 jobs on page load
     const firstQuery = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(30));
     const documentSnapshots = await getDocs(firstQuery);
@@ -140,8 +143,9 @@ function RoleTable() {
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
     // append the connections to each object in jobsQuery
     jobsQuery.forEach((job, index) => {
-      if (companyData.has(job.Company)) {
-        job.connectionsData = companyData[job.Company]
+      if (companyData.has(job.company)) {
+        console.log(companyData.get(job.company))
+        job.connectionsData = companyData.get(job.company);
       }
       else {
         job.connectionsData = 0
