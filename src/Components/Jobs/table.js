@@ -116,7 +116,7 @@ function RoleTable() {
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
-
+    dispatch(setSelectedJob(jobsQuery[0]));
     dispatch(setJobs(jobsQuery));
     setLastVisible(lastQueryItem);
 
