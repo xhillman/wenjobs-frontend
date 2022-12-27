@@ -32,7 +32,7 @@ const PeopleTable = () => {
       console.log("No such document!");
     }
 
-    console.log(data)
+    // console.log(data)
     dispatch(setConnectionsData(data));
   }
 
@@ -41,7 +41,7 @@ const PeopleTable = () => {
       readConnectionsData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated])
+  }, [])
 
   return (
     <>

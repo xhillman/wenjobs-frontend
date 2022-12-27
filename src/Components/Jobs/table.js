@@ -25,6 +25,11 @@ const columns = [
     key: 'company',
   },
   {
+    title: '# of Connections',
+    dataIndex: 'connections',
+    key: 'connections',
+  },
+  {
     title: 'Location',
     dataIndex: 'location',
     key: 'location',
@@ -107,6 +112,25 @@ function RoleTable() {
   // declaring variables from redux state
   let jobsData = [...jobs.filteredJobs];
 
+  let connectionsData = useSelector(state => state.connections.connections);
+  let companyData = new Map();
+  connectionsData.forEach(connection => {
+    if (companyData.has(connection.Company)) {
+      let currentCount = companyData.get(connection.Company);
+      companyData.set(connection.Company, currentCount + 1);
+    } else {
+      companyData.set(connection.Company, 1);
+    }
+  })
+  let companyDataArray = [];
+  companyData.forEach((value, key) => {
+    if (key === '') {
+      companyDataArray.push({company: 'No Company Listed', numConnections: value});
+    } else {
+      companyDataArray.push({ company: key, numConnections: value });
+    }
+  })
+
   const fetchJobs = async () => {
     // get the first 30 jobs on page load
     const firstQuery = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(30));
@@ -114,6 +138,17 @@ function RoleTable() {
 
     // store the first 30 jobs in state
     let jobsQuery = documentSnapshots.docs.map(doc => doc.data());
+    // append the connections to each object in jobsQuery
+    jobsQuery.forEach((job, index) => {
+      if (companyData.has(job.Company)) {
+        job.connectionsData = companyData[job.Company]
+      }
+      else {
+        job.connectionsData = 0
+      }
+    })
+
+
     let lastQueryItem = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 
 
@@ -121,6 +156,7 @@ function RoleTable() {
     setLastVisible(lastQueryItem);
 
   }
+
 
   const fetchMoreJobs = async () => {
     const next = query(collection(db, "jobs"), orderBy('key', 'desc'), limit(10), startAfter(lastVisible));
@@ -138,7 +174,7 @@ function RoleTable() {
   // fetch the first 30 jobs on page load
   useEffect(() => {
     fetchJobs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRowSelection = {
