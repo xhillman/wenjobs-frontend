@@ -12,7 +12,13 @@ const JobCard = () => {
         <Card
             bodyStyle={{ overflowY: 'auto', height: '60vh' }}
             actions={[
-                <Button type="primary">Apply Here</Button>
+                <Button
+                    href={selectedJob.URL}
+                    target='_blank'
+                    type="primary"
+                    style={{ width: '7rem', color: 'white', }}>
+                    Apply Here
+                </Button>
             ]}
         >
             <Title level={2} >{selectedJob.title}</Title>
