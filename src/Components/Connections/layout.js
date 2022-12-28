@@ -1,6 +1,6 @@
 import React from 'react';
 import PeopleTable from './table';
-import PeopleForm from './form';
+// import PeopleForm from './form';
 import UploadConnections from './uploadConnections';
 import { useSelector } from 'react-redux';
 import './style.css';
@@ -16,7 +16,7 @@ function ConnectionsLayout() {
 
   return (
     <>
-      {message  !== '' && ( // if message is truthy, render the alert
+      {message !== '' && ( // if message is truthy, render the alert
 
         <Space
           direction="vertical"
@@ -35,11 +35,19 @@ function ConnectionsLayout() {
 
       <Layout className='layout'>
 
-        <Sider className='connectionSider' width='15rem' theme='light'>
-          <div className='formHeader'>
-            <h4>Search</h4>
-          </div>
-          <PeopleForm />
+        <Sider className='connectionSider' width='16rem' theme='light'>
+          <ol className='uploadChecklist'>
+            <li>
+              Go to your <a href='https://www.linkedin.com/mypreferences/d/download-my-data' target='_blank' rel='noreferrer'>LinkedIn</a> Settings
+            </li>
+            <li>Check "Connections"</li>
+            <li>Click "Request Archive"</li>
+            <li>Wait for the email from LinkedIn</li>
+            <li>Download the CSV from the link in the email</li>
+            <li>Edit the CSV to delete the first three rows</li>
+            <li>Upload the CSV here</li>
+          </ol>
+          {/* <PeopleForm /> */}
           <UploadConnections />
         </Sider>
 
