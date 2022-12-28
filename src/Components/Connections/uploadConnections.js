@@ -20,7 +20,7 @@ const UploadConnections = () => {
 
     const { user, isAuthenticated } = useAuth0();
 
-    const handleFile = (info) => {
+    const handleFile = async (info) => {
 
         if (isAuthenticated) {
             // console.log('authenticated', user.email)
@@ -28,13 +28,14 @@ const UploadConnections = () => {
                 Papa.parse(info.file, {
                     header: true,
                     complete: (result) => {
-                        // console.log(result.data);
-                        dispatch(setConnectionsData(result.data))
-                        // console.log('papa parse connections ', connectionsData)
+                        console.log('a', result.data);
+                        dispatch(setConnectionsData(result.data));
+                        addConnectionsData(result.data);
+
+
                     }
                 });
-                // console.log('papa parse connections ', connectionsData);
-                addConnectionsData();
+                console.log('b', connectionsData);
                 info.onSuccess(info.file);
             } catch (error) {
                 // console.error(error);
@@ -46,22 +47,25 @@ const UploadConnections = () => {
         else {
             dispatch(setMessage('Please login to upload a file'));
         }
+
+        console.log('c', connectionsData);
     }
 
 
-    const addConnectionsData = async () => {
+    const addConnectionsData = async (connections) => {
         // console.log(user.email)
+        console.log('connections data ', connections)
         try {
-            if (connectionsData) {
+            if (connections) {
                 const ref = doc(db, 'users', user.email);
                 await updateDoc(ref, {
-                    connections: connectionsData
+                    connections: connections
                 });
                 // console.log('added connections data to DB')
 
             }
         } catch (e) {
-            // console.error('Error adding document: ', e);
+            console.error('Error adding document: ', e);
         }
     }
 
