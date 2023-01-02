@@ -23,7 +23,7 @@ A job board that utilizes scheduled web-scraping to collect current Web3 job pos
 
 ## Deployed Site
 
-[wenjob.xyz]('wenjobs.xyz')
+[wenjobs.xyz](https://wenjobs.xyz/)
 
 ## Domain Modeling
 
